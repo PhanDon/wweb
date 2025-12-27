@@ -1,0 +1,841 @@
+/* Train Booking Page Styles */
+.train-booking-page {
+    padding: 30px 0 60px;
+    background: linear-gradient(135deg, #f9f7f7 0%, #dbe2ef 100%);
+    min-height: calc(100vh - 120px);
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    color: #0A1F3C;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.page-header p {
+    color: #666;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.booking-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.search-form-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    margin-bottom: 20px;
+}
+
+.search-form-card .form-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 1200px) {
+    .search-form-card .form-row {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .search-form-card .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Train Selection */
+.train-selection-section {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.section-header h2 {
+    font-size: 1.8rem;
+    color: #0A1F3C;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.selected-train-info {
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.selected-train-info strong {
+    color: #33FFCC;
+    font-weight: 700;
+}
+
+.trains-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.train-card {
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 25px;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.train-card.selected {
+    border-color: #33FFCC;
+    background: #f8fffd;
+    box-shadow: 0 5px 20px rgba(51, 255, 204, 0.2);
+}
+
+.train-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.train-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.train-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.train-info img {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.train-info h4 {
+    font-size: 1.3rem;
+    color: #0A1F3C;
+    margin-bottom: 5px;
+}
+
+.train-class {
+    color: #666;
+    font-size: 0.9rem;
+    background: #f8f9fa;
+    padding: 3px 10px;
+    border-radius: 5px;
+}
+
+.train-price {
+    text-align: right;
+}
+
+.train-price .price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #33FFCC;
+    display: block;
+}
+
+.train-price .per-person {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.train-details {
+    margin-bottom: 25px;
+}
+
+.route {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.departure, .arrival {
+    text-align: center;
+}
+
+.departure .time, .arrival .time {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #0A1F3C;
+    margin-bottom: 5px;
+}
+
+.departure .station, .arrival .station {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.duration {
+    text-align: center;
+}
+
+.duration i {
+    color: #33FFCC;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.duration span {
+    font-weight: 600;
+    color: #0A1F3C;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.stops {
+    color: #666;
+    font-size: 0.9rem;
+    background: #f8f9fa;
+    padding: 2px 10px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.train-features {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.feature i {
+    color: #33FFCC;
+}
+
+.train-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+/* Train Seat Selection */
+.train-seat-section {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    margin-top: 20px;
+}
+
+.selected-seats-info {
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.selected-seats-info strong {
+    color: #33FFCC;
+    font-weight: 700;
+}
+
+/* Compartment Selector */
+.compartment-selector {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.compartment-selector h4 {
+    font-size: 1.3rem;
+    color: #0A1F3C;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.compartment-options {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+@media (max-width: 992px) {
+    .compartment-options {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .compartment-options {
+        grid-template-columns: 1fr;
+    }
+}
+
+.compartment-option {
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.compartment-option.active {
+    border-color: #33FFCC;
+    background: #f8fffd;
+    box-shadow: 0 4px 15px rgba(51, 255, 204, 0.2);
+}
+
+.compartment-option:hover:not(.active) {
+    border-color: #33FFCC;
+    background: #f8fffd;
+}
+
+.compartment-name {
+    font-weight: 600;
+    color: #0A1F3C;
+    font-size: 1rem;
+}
+
+.compartment-type {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Train Layout */
+.train-layout-container {
+    position: relative;
+    margin-bottom: 40px;
+    overflow-x: auto;
+}
+
+.train-compartment {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.train-compartment.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.compartment-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.compartment-header h4 {
+    font-size: 1.3rem;
+    color: #0A1F3C;
+    margin-bottom: 10px;
+}
+
+.compartment-info {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.compartments-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 1200px) {
+    .compartments-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .compartments-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .compartments-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .compartments-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.compartment-unit {
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px;
+    background: #f8f9fa;
+    text-align: center;
+}
+
+.compartment-number {
+    font-weight: 700;
+    color: #0A1F3C;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.berth-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.upper-berths, .lower-berths {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.berth {
+    width: 80px;
+    height: 60px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    font-weight: 600;
+}
+
+.berth:hover:not(.unavailable) {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.berth.upper {
+    background: #e3f2fd;
+    border-color: #bbdefb;
+}
+
+.berth.lower {
+    background: #f3e5f5;
+    border-color: #e1bee7;
+}
+
+.berth.selected {
+    background: #33FFCC;
+    border-color: #00CC99;
+    color: #0A1F3C;
+}
+
+.berth.unavailable {
+    background: #f8d7da;
+    border-color: #f5c6cb;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.berth-number {
+    font-size: 1.2rem;
+    margin-bottom: 2px;
+}
+
+.berth-type {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+/* Seat Legend */
+.seat-legend {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    padding-top: 30px;
+    border-top: 2px solid #f0f0f0;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.legend-color {
+    width: 25px;
+    height: 25px;
+    border-radius: 5px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.legend-color.available { background: #d4edda; }
+.legend-color.selected { background: #33FFCC; }
+.legend-color.unavailable { background: #f8d7da; }
+.legend-color.upper { background: #e3f2fd; }
+.legend-color.lower { background: #f3e5f5; }
+
+/* Booking Summary */
+.booking-summary-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 100px;
+}
+
+.booking-summary-card h3 {
+    font-size: 1.5rem;
+    color: #0A1F3C;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.summary-details {
+    margin-bottom: 30px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.detail-row.total {
+    border-top: 2px solid #33FFCC;
+    border-bottom: none;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #0A1F3C;
+    padding-top: 20px;
+    margin-top: 10px;
+}
+
+.booking-policies {
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 2px solid #f0f0f0;
+}
+
+.booking-policies h4 {
+    font-size: 1.1rem;
+    color: #0A1F3C;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.booking-policies ul {
+    list-style: none;
+    padding: 0;
+}
+
+.booking-policies li {
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #555;
+}
+
+.booking-policies li i {
+    color: #33FFCC;
+}
+
+/* Modal styles (same as bus.css) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    padding: 25px 30px;
+    border-bottom: 2px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    font-size: 1.5rem;
+    color: #0A1F3C;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: #666;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+    background: #f5f5f5;
+    color: #333;
+}
+
+.modal-body {
+    padding: 30px;
+}
+
+.payment-method {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.payment-method:hover {
+    border-color: #33FFCC;
+    transform: translateX(5px);
+}
+
+.payment-method .method-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #33FFCC 0%, #00CC99 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+.payment-method .method-icon i {
+    font-size: 1.8rem;
+    color: #0A1F3C;
+}
+
+.method-info {
+    flex: 1;
+}
+
+.method-info h4 {
+    font-size: 1.2rem;
+    color: #0A1F3C;
+    margin-bottom: 5px;
+}
+
+.method-info p {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.method-select i {
+    color: #33FFCC;
+    font-size: 1.2rem;
+}
+
+/* QR Modal */
+.qr-modal {
+    max-width: 800px;
+}
+
+.qr-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+@media (max-width: 768px) {
+    .qr-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.qr-code-placeholder {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #dee2e6;
+}
+
+.qr-placeholder {
+    text-align: center;
+}
+
+.qr-placeholder i {
+    font-size: 8rem;
+    color: #33FFCC;
+    margin-bottom: 20px;
+}
+
+.qr-placeholder p {
+    color: #666;
+    margin: 5px 0;
+}
+
+.qr-placeholder .qr-note {
+    font-size: 0.9rem;
+    color: #999;
+    margin-top: 10px;
+}
+
+.qr-instructions h4 {
+    font-size: 1.3rem;
+    color: #0A1F3C;
+    margin-bottom: 20px;
+}
+
+.qr-instructions ol {
+    padding-left: 20px;
+    margin-bottom: 30px;
+}
+
+.qr-instructions li {
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.payment-details {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.payment-details .detail-row {
+    padding: 10px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.payment-details .amount {
+    font-weight: 700;
+    color: #33FFCC;
+    font-size: 1.2rem;
+}
+
+.payment-details .timeout {
+    color: #ff6b6b;
+    font-weight: 600;
+}
+
+/* Responsive Design */
+@media (min-width: 992px) {
+    .booking-container {
+        grid-template-columns: 2fr 1fr;
+    }
+    
+    .train-selection-section {
+        grid-column: 1;
+        grid-row: 2;
+    }
+    
+    .train-seat-section {
+        grid-column: 1;
+        grid-row: 3;
+    }
+    
+    .booking-summary-card {
+        grid-column: 2;
+        grid-row: 1 / span 3;
+    }
+}
+
+@media (max-width: 991px) {
+    .booking-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .booking-summary-card {
+        position: static;
+        order: 4;
+    }
+}

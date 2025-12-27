@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vé đã đặt - TravelHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="tickets.css">
+</head>
+<body>
+    <!-- Header (giống index.html) -->
+    <div class="top-banner">
+        <div class="container">
+            <span><i class="fas fa-shield-alt"></i> Đảm bảo giá tốt nhất - Hoàn 150% nếu tìm thấy rẻ hơn</span>
+        </div>
+    </div>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-compass"></i>
+                    <span>TRAVEL<span>HUB</span></span>
+                </a>
+                
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-home"></i> Trang chủ</a></li>
+                        <li><a href="bus.html"><i class="fas fa-bus"></i> Vé xe</a></li>
+                        <li><a href="flight.html"><i class="fas fa-plane"></i> Vé máy bay</a></li>
+                        <li><a href="train.html"><i class="fas fa-train"></i> Vé tàu</a></li>
+                        <li><a href="my-tickets.html" class="active"><i class="fas fa-ticket-alt"></i> Vé đã đặt</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="user-actions">
+                    <a href="#" class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </a>
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=Nguyen+Van+A&background=33FFCC&color=0A1F3C&bold=true" alt="User">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation (giống index.html) -->
+        <div class="mobile-nav" id="mobileNav">
+            <!-- Nội dung giống index.html -->
+        </div>
+    </header>
+
+    <!-- My Tickets Page -->
+    <main class="my-tickets-page">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>Vé đã đặt</h1>
+                <p>Quản lý và theo dõi tất cả vé đã đặt của bạn</p>
+            </div>
+            
+            <!-- Tickets Filter -->
+            <div class="tickets-filter">
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="all">
+                        <span>Tất cả</span>
+                        <span class="tab-count">18</span>
+                    </button>
+                    <button class="filter-tab" data-filter="upcoming">
+                        <span>Sắp tới</span>
+                        <span class="tab-count">3</span>
+                    </button>
+                    <button class="filter-tab" data-filter="completed">
+                        <span>Đã đi</span>
+                        <span class="tab-count">12</span>
+                    </button>
+                    <button class="filter-tab" data-filter="cancelled">
+                        <span>Đã hủy</span>
+                        <span class="tab-count">3</span>
+                    </button>
+                </div>
+                
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchTickets" placeholder="Tìm kiếm theo mã vé, tuyến đường...">
+                </div>
+            </div>
+            
+            <!-- Tickets List -->
+            <div class="tickets-container">
+                <!-- Active Tickets -->
+                <div class="tickets-section">
+                    <h3><i class="fas fa-clock"></i> Chuyến sắp tới</h3>
+                    <div class="tickets-list" id="upcomingTickets">
+                        <!-- Tickets will be loaded here -->
+                        <div class="ticket-card active">
+                            <div class="ticket-header">
+                                <div class="ticket-status">
+                                    <span class="status-badge upcoming">SẮP TỚI</span>
+                                    <span class="ticket-code">Mã vé: ML-789012</span>
+                                </div>
+                                <div class="ticket-date">
+                                    <span class="date">31/12/2025</span>
+                                    <span class="time">22:00</span>
+                                </div>
+                            </div>
+                            
+                            <div class="ticket-body">
+                                <div class="ticket-route">
+                                    <div class="from">
+                                        <div class="city">TP.HCM</div>
+                                        <div class="station">Bến xe Miền Đông</div>
+                                    </div>
+                                    <div class="route-arrow">
+                                        <i class="fas fa-long-arrow-alt-right"></i>
+                                    </div>
+                                    <div class="to">
+                                        <div class="city">HÀ NỘI</div>
+                                        <div class="station">Bến xe Giáp Bát</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="ticket-info">
+                                    <div class="info-item">
+                                        <i class="fas fa-bus"></i>
+                                        <span>Mai Linh</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="fas fa-chair"></i>
+                                        <span>Ghế: 12, 13</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="fas fa-user-friends"></i>
+                                        <span>2 người</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>7h30</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="ticket-footer">
+                                <div class="ticket-price">
+                                    <span class="price">900.000đ</span>
+                                    <span class="status">Đã thanh toán</span>
+                                </div>
+                                <div class="ticket-actions">
+                                    <button class="btn btn-outline btn-sm view-qr-btn">
+                                        <i class="fas fa-qrcode"></i> QR Code
+                                    </button>
+                                    <button class="btn btn-primary btn-sm details-btn">
+                                        <i class="fas fa-info-circle"></i> Chi tiết
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="ticket-card active">
+                            <div class="ticket-header">
+                                <div class="ticket-status">
+                                    <span class="status-badge hold">ĐANG GIỮ</span>
+                                    <span class="ticket-code">Mã vé: VN-456123</span>
+                                </div>
+                                <div class="ticket-date">
+                                    <span class="date">20/12/2025</span>
+                                    <span class="time">14:30</span>
+                                </div>
+                            </div>
+                            
+                            <div class="ticket-body">
+                                <div class="ticket-route">
+                                    <div class="from">
+                                        <div class="city">TP.HCM</div>
+                                        <div class="station">Sân bay TSN</div>
+                                    </div>
+                                    <div class="route-arrow">
+                                        <i class="fas fa-long-arrow-alt-right"></i>
+                                    </div>
+                                    <div class="to">
+                                        <div class="city">HÀ NỘI</div>
+                                        <div class="station">Sân bay Nội Bài</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="ticket-info">
+                                    <div class="info-item">
+                                        <i class="fas fa-plane"></i>
+                                        <span>Vietnam Airlines</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="fas fa-chair"></i>
+                                        <span>Ghế: 15A</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="fas fa-user-friends"></i>
+                                        <span>1 người</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>2h00</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="ticket-footer">
+                                <div class="ticket-price">
+                                    <span class="price">2.150.000đ</span>
+                                    <span class="status pending">Chờ thanh toán</span>
+                                </div>
+                                <div class="ticket-actions">
+                                    <button class="btn btn-danger btn-sm cancel-hold-btn">
+                                        <i class="fas fa-times"></i> Hủy giữ
+                                    </button>
+                                    <button class="btn btn-primary btn-sm payment-btn">
+                                        <i class="fas fa-credit-card"></i> Thanh toán
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Past Tickets -->
+                <div class="tickets-section">
+                    <h3><i class="fas fa-history"></i> Chuyến đã đi</h3>
+                    <div class="tickets-list" id="completedTickets">
+                        <!-- Completed tickets will be loaded here -->
+                        <div class="ticket-card">
+                            <div class="ticket-header">
+                                <div class="ticket-status">
+                                    <span class="status-badge completed">ĐÃ ĐI</span>
+                                    <span class="ticket-code">Mã vé: PT-321654</span>
+                                </div>
+                                <div class="ticket-date">
+                                    <span class="date">05/01/2024</span>
+                                    <span class="time">08:00</span>
+                                </div>
+                            </div>
+                            
+                            <div class="ticket-body">
+                                <div class="ticket-route">
+                                    <div class="from">
+                                        <div class="city">ĐÀ NẴNG</div>
+                                        <div class="station">Bến xe Đà Nẵng</div>
+                                    </div>
+                                    <div class="route-arrow">
+                                        <i class="fas fa-long-arrow-alt-right"></i>
+                                    </div>
+                                    <div class="to">
+                                        <div class="city">NHA TRANG</div>
+                                        <div class="station">Bến xe Nha Trang</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="ticket-info">
+                                    <div class="info-item">
+                                        <i class="fas fa-bus"></i>
+                                        <span>Phương Trang</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="fas fa-chair"></i>
+                                        <span>Ghế: 05</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="fas fa-user-friends"></i>
+                                        <span>1 người</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>4h30</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="ticket-footer">
+                                <div class="ticket-price">
+                                    <span class="price">450.000đ</span>
+                                    <span class="status">Đã thanh toán</span>
+                                </div>
+                                <div class="ticket-actions">
+                                    <button class="btn btn-outline btn-sm view-qr-btn">
+                                        <i class="fas fa-qrcode"></i> QR Code
+                                    </button>
+                                    <button class="btn btn-outline btn-sm review-btn">
+                                        <i class="fas fa-star"></i> Đánh giá
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Empty State -->
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <div class="empty-icon">
+                        <i class="fas fa-ticket-alt"></i>
+                    </div>
+                    <h3>Chưa có vé nào</h3>
+                    <p>Bạn chưa đặt vé nào. Hãy bắt đầu tìm kiếm chuyến đi!</p>
+                    <a href="bus.html" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Tìm chuyến đi
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- QR Modal -->
+        <div class="modal" id="qrModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Mã QR Vé</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="qr-container">
+                        <div class="qr-code" id="qrCodeDisplay">
+                            <!-- QR code will be generated here -->
+                            <div class="qr-placeholder">
+                                <i class="fas fa-qrcode"></i>
+                            </div>
+                        </div>
+                        <div class="qr-info">
+                            <div class="info-item">
+                                <span class="label">Mã vé:</span>
+                                <span class="value" id="qrTicketCode">ML-789012</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Tuyến đường:</span>
+                                <span class="value" id="qrTicketRoute">TP.HCM → HÀ NỘI</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Thời gian:</span>
+                                <span class="value" id="qrTicketTime">31/12/2025 • 22:00</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Trạng thái:</span>
+                                <span class="value status-upcoming">Đã thanh toán</span>
+                            </div>
+                            <div class="qr-actions">
+                                <button class="btn btn-outline" id="printTicketBtn">
+                                    <i class="fas fa-print"></i> In vé
+                                </button>
+                                <button class="btn btn-primary" id="downloadTicketBtn">
+                                    <i class="fas fa-download"></i> Tải vé
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Ticket Details Modal -->
+        <div class="modal" id="ticketDetailsModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Chi tiết vé</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <!-- Details will be loaded by JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Payment Modal -->
+        <div class="modal" id="paymentModal">
+            <div class="modal-content payment-modal">
+                <div class="modal-header">
+                    <h3>Thanh toán vé</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="payment-summary">
+                        <h4>Thông tin thanh toán</h4>
+                        <div class="summary-details">
+                            <div class="detail-row">
+                                <span>Mã vé:</span>
+                                <span>VN-456123</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>Tổng tiền:</span>
+                                <span class="total-price">2.150.000đ</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>Hạn thanh toán:</span>
+                                <span class="deadline">Còn 25 phút</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-methods">
+                        <h4>Chọn phương thức thanh toán</h4>
+                        <div class="methods-list">
+                            <div class="method-option active" data-method="qr">
+                                <div class="method-icon">
+                                    <i class="fas fa-qrcode"></i>
+                                </div>
+                                <div class="method-info">
+                                    <h5>QR Code</h5>
+                                    <p>Quét mã để thanh toán</p>
+                                </div>
+                                <div class="method-check">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="method-option" data-method="bank">
+                                <div class="method-icon">
+                                    <i class="fas fa-university"></i>
+                                </div>
+                                <div class="method-info">
+                                    <h5>Chuyển khoản ngân hàng</h5>
+                                    <p>Chuyển khoản qua Internet Banking</p>
+                                </div>
+                                <div class="method-check">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="method-option" data-method="card">
+                                <div class="method-icon">
+                                    <i class="fas fa-credit-card"></i>
+                                </div>
+                                <div class="method-info">
+                                    <h5>Thẻ tín dụng/ghi nợ</h5>
+                                    <p>Visa, Mastercard, JCB</p>
+                                </div>
+                                <div class="method-check">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="method-option" data-method="wallet">
+                                <div class="method-icon">
+                                    <i class="fas fa-wallet"></i>
+                                </div>
+                                <div class="method-info">
+                                    <h5>Ví điện tử</h5>
+                                    <p>Momo, ZaloPay, VNPay</p>
+                                </div>
+                                <div class="method-check">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="method-option" data-method="cash">
+                                <div class="method-icon">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                                <div class="method-info">
+                                    <h5>Tiền mặt</h5>
+                                    <p>Thanh toán tại điểm bán vé</p>
+                                </div>
+                                <div class="method-check">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-details" id="paymentDetails">
+                        <!-- Payment details will be shown based on selected method -->
+                        <div class="qr-payment active">
+                            <h5>Quét mã QR để thanh toán</h5>
+                            <div class="qr-display">
+                                <div class="payment-qr" id="paymentQrCode">
+                                    <!-- QR code for payment -->
+                                </div>
+                                <div class="qr-instructions">
+                                    <p><strong>Hướng dẫn:</strong></p>
+                                    <ol>
+                                        <li>Mở ứng dụng ngân hàng hoặc ví điện tử</li>
+                                        <li>Chọn tính năng quét mã QR</li>
+                                        <li>Quét mã bên cạnh để thanh toán</li>
+                                        <li>Kiểm tra và xác nhận thanh toán</li>
+                                    </ol>
+                                    <p class="note">Vé sẽ tự động cập nhật sau khi thanh toán thành công</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-actions">
+                        <button class="btn btn-outline" id="cancelPaymentBtn">
+                            <i class="fas fa-times"></i> Hủy
+                        </button>
+                        <button class="btn btn-primary" id="confirmPaymentBtn">
+                            <i class="fas fa-check"></i> Xác nhận thanh toán
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer (giống index.html) -->
+    <footer>
+        <!-- Nội dung giống index.html -->
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js"></script>
+    <script src="script.js"></script>
+    <script src="tickets.js"></script>
+</body>
+</html>

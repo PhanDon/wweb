@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh toán - TravelHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="payment.css">
+</head>
+<body>
+    <!-- Header (giống booking.html) -->
+    <div class="top-banner">
+        <div class="container">
+            <span><i class="fas fa-shield-alt"></i> Đảm bảo giá tốt nhất - Hoàn 150% nếu tìm thấy rẻ hơn</span>
+        </div>
+    </div>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-compass"></i>
+                    <span>TRAVEL<span>HUB</span></span>
+                </a>
+                
+                <div class="payment-progress">
+                    <div class="progress-steps">
+                        <div class="step completed">
+                            <span class="step-number">1</span>
+                            <span class="step-text">Chọn chỗ</span>
+                        </div>
+                        <div class="step completed">
+                            <span class="step-number">2</span>
+                            <span class="step-text">Thông tin</span>
+                        </div>
+                        <div class="step active">
+                            <span class="step-number">3</span>
+                            <span class="step-text">Thanh toán</span>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">4</span>
+                            <span class="step-text">Hoàn tất</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="user-actions">
+                    <div class="timer">
+                        <i class="fas fa-clock"></i>
+                        <span id="paymentTimer">24:30</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Payment Page -->
+    <main class="payment-page">
+        <div class="container">
+            <div class="payment-container">
+                <!-- Payment Steps -->
+                <div class="payment-steps">
+                    <div class="step completed">
+                        <div class="step-number">1</div>
+                        <div class="step-text">Chọn phương thức</div>
+                    </div>
+                    <div class="step active">
+                        <div class="step-number">2</div>
+                        <div class="step-text">Xác nhận thông tin</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-text">Hoàn tất thanh toán</div>
+                    </div>
+                </div>
+                
+                <div class="payment-content">
+                    <!-- Trip Summary -->
+                    <section class="trip-summary">
+                        <div class="summary-header">
+                            <h3>Thông tin đặt vé</h3>
+                            <a href="booking.html" class="btn btn-outline btn-sm">
+                                <i class="fas fa-edit"></i> Sửa thông tin
+                            </a>
+                        </div>
+                        
+                        <div class="trip-timeline">
+                            <div class="timeline-point">
+                                <div class="time">22:00</div>
+                                <div class="date">31/12/2025</div>
+                                <div class="location">Bến xe Miền Đông</div>
+                            </div>
+                            
+                            <div class="timeline-duration">
+                                <div class="duration">7h30</div>
+                                <div class="distance">1,650 km</div>
+                            </div>
+                            
+                            <div class="timeline-point">
+                                <div class="time">05:30</div>
+                                <div class="date">01/01/2026</div>
+                                <div class="location">Bến xe Giáp Bát</div>
+                            </div>
+                        </div>
+                        
+                        <div class="trip-details">
+                            <div class="detail-item">
+                                <div class="detail-label">Nhà xe</div>
+                                <div class="detail-value">Mai Linh Express</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Số ghế</div>
+                                <div class="detail-value">12, 13</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Hành khách</div>
+                                <div class="detail-value">2 người</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Loại vé</div>
+                                <div class="detail-value">Giường nằm</div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <div class="payment-main">
+                        <!-- Passenger Info -->
+                        <section class="passenger-info">
+                            <div class="section-title">
+                                <i class="fas fa-user-friends"></i>
+                                <h4>Thông tin hành khách</h4>
+                            </div>
+                            
+                            <div class="passenger-list">
+                                <div class="passenger-card">
+                                    <div class="passenger-header">
+                                        <span class="passenger-number">Hành khách 1</span>
+                                        <span class="seat-number">Ghế 12</span>
+                                    </div>
+                                    <div class="passenger-details">
+                                        <div class="detail">
+                                            <span class="label">Họ tên:</span>
+                                            <span class="value">Nguyễn Văn A</span>
+                                        </div>
+                                        <div class="detail">
+                                            <span class="label">SĐT:</span>
+                                            <span class="value">0912 345 678</span>
+                                        </div>
+                                        <div class="detail">
+                                            <span class="label">Email:</span>
+                                            <span class="value">nguyenvana@email.com</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="passenger-card">
+                                    <div class="passenger-header">
+                                        <span class="passenger-number">Hành khách 2</span>
+                                        <span class="seat-number">Ghế 13</span>
+                                    </div>
+                                    <div class="passenger-details">
+                                        <div class="detail">
+                                            <span class="label">Họ tên:</span>
+                                            <span class="value">Trần Thị B</span>
+                                        </div>
+                                        <div class="detail">
+                                            <span class="label">SĐT:</span>
+                                            <span class="value">0987 654 321</span>
+                                        </div>
+                                        <div class="detail">
+                                            <span class="label">Email:</span>
+                                            <span class="value">tranthib@email.com</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        
+                        <!-- Contact Info -->
+                        <section class="contact-info">
+                            <div class="section-title">
+                                <i class="fas fa-address-book"></i>
+                                <h4>Thông tin liên hệ</h4>
+                            </div>
+                            
+                            <div class="contact-details">
+                                <div class="detail">
+                                    <span class="label">Người liên hệ:</span>
+                                    <span class="value">Nguyễn Văn A</span>
+                                </div>
+                                <div class="detail">
+                                    <span class="label">Số điện thoại:</span>
+                                    <span class="value">0912 345 678</span>
+                                </div>
+                                <div class="detail">
+                                    <span class="label">Email nhận vé:</span>
+                                    <span class="value">nguyenvana@email.com</span>
+                                </div>
+                            </div>
+                        </section>
+                        
+                        <!-- Payment Methods -->
+                        <section class="payment-methods-section">
+                            <div class="section-title">
+                                <i class="fas fa-credit-card"></i>
+                                <h4>Chọn phương thức thanh toán</h4>
+                            </div>
+                            
+                            <div class="methods-grid">
+                                <!-- QR Code Payment -->
+                                <div class="method-card active" data-method="qr">
+                                    <div class="method-icon">
+                                        <i class="fas fa-qrcode"></i>
+                                    </div>
+                                    <div class="method-name">QR Code</div>
+                                    <div class="method-desc">Quét mã để thanh toán</div>
+                                    <div class="method-fee">Miễn phí</div>
+                                </div>
+                                
+                                <!-- Bank Transfer -->
+                                <div class="method-card" data-method="bank">
+                                    <div class="method-icon">
+                                        <i class="fas fa-university"></i>
+                                    </div>
+                                    <div class="method-name">Chuyển khoản</div>
+                                    <div class="method-desc">Internet Banking</div>
+                                    <div class="method-fee">Miễn phí</div>
+                                </div>
+                                
+                                <!-- Credit Card -->
+                                <div class="method-card" data-method="card">
+                                    <div class="method-icon">
+                                        <i class="fas fa-credit-card"></i>
+                                    </div>
+                                    <div class="method-name">Thẻ tín dụng</div>
+                                    <div class="method-desc">Visa, Mastercard</div>
+                                    <div class="method-fee">1.5% phí</div>
+                                </div>
+                                
+                                <!-- E-Wallet -->
+                                <div class="method-card" data-method="wallet">
+                                    <div class="method-icon">
+                                        <i class="fas fa-wallet"></i>
+                                    </div>
+                                    <div class="method-name">Ví điện tử</div>
+                                    <div class="method-desc">Momo, ZaloPay</div>
+                                    <div class="method-fee">Miễn phí</div>
+                                </div>
+                                
+                                <!-- Cash -->
+                                <div class="method-card" data-method="cash">
+                                    <div class="method-icon">
+                                        <i class="fas fa-money-bill-wave"></i>
+                                    </div>
+                                    <div class="method-name">Tiền mặt</div>
+                                    <div class="method-desc">Thanh toán tại điểm</div>
+                                    <div class="method-fee">Phí 10.000đ</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Method Details -->
+                            <div class="method-details active" id="qrMethod">
+                                <div class="qr-payment">
+                                    <h5>Quét mã QR để thanh toán</h5>
+                                    <div class="qr-display">
+                                        <div class="payment-qr" id="paymentQr">
+                                            <!-- QR code will be generated here -->
+                                            <div class="qr-placeholder">
+                                                <i class="fas fa-qrcode"></i>
+                                                <p>Đang tạo mã QR...</p>
+                                            </div>
+                                        </div>
+                                        <div class="qr-instructions">
+                                            <p><strong>Hướng dẫn thanh toán:</strong></p>
+                                            <ol>
+                                                <li>Mở ứng dụng ngân hàng hoặc ví điện tử</li>
+                                                <li>Chọn tính năng "Quét mã QR"</li>
+                                                <li>Quét mã QR bên cạnh</li>
+                                                <li>Kiểm tra thông tin và xác nhận thanh toán</li>
+                                                <li>Giữ lại hóa đơn để đối chiếu</li>
+                                            </ol>
+                                            <div class="qr-note">
+                                                <i class="fas fa-info-circle"></i>
+                                                <p>Vé sẽ được gửi qua email sau khi thanh toán thành công</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="method-details" id="bankMethod">
+                                <div class="bank-payment">
+                                    <h5>Chuyển khoản ngân hàng</h5>
+                                    <div class="bank-info">
+                                        <div class="bank-details">
+                                            <div class="bank-row">
+                                                <span class="label">Ngân hàng:</span>
+                                                <span class="value">Vietcombank</span>
+                                            </div>
+                                            <div class="bank-row">
+                                                <span class="label">Số tài khoản:</span>
+                                                <span class="value">0123456789</span>
+                                            </div>
+                                            <div class="bank-row">
+                                                <span class="label">Chủ tài khoản:</span>
+                                                <span class="value">CÔNG TY TRAVELHUB</span>
+                                            </div>
+                                            <div class="bank-row">
+                                                <span class="label">Chi nhánh:</span>
+                                                <span class="value">HCM - Trần Hưng Đạo</span>
+                                            </div>
+                                            <div class="bank-row">
+                                                <span class="label">Nội dung chuyển khoản:</span>
+                                                <span class="value">TH ML789012 Nguyenvana</span>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-outline copy-btn" id="copyBankInfo">
+                                            <i class="far fa-copy"></i> Sao chép thông tin
+                                        </button>
+                                    </div>
+                                    <div class="bank-instructions">
+                                        <p><strong>Lưu ý:</strong></p>
+                                        <ul>
+                                            <li>Vui lòng chuyển khoản chính xác nội dung như trên</li>
+                                            <li>Thanh toán trong vòng 30 phút để giữ chỗ</li>
+                                            <li>Vé sẽ được kích hoạt sau 5-10 phút kể từ khi chuyển khoản</li>
+                                            <li>Liên hệ 1900 1234 nếu cần hỗ trợ</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="method-details" id="cardMethod">
+                                <div class="card-payment">
+                                    <h5>Thanh toán bằng thẻ</h5>
+                                    <div class="card-form">
+                                        <div class="form-group">
+                                            <label for="cardNumber">Số thẻ</label>
+                                            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456">
+                                        </div>
+                                        <div class="card-row">
+                                            <div class="form-group">
+                                                <label for="cardExpiry">Ngày hết hạn</label>
+                                                <input type="text" id="cardExpiry" placeholder="MM/YY">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="cardCVC">Mã CVC</label>
+                                                <input type="text" id="cardCVC" placeholder="123">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cardName">Tên chủ thẻ</label>
+                                            <input type="text" id="cardName" placeholder="NGUYEN VAN A">
+                                        </div>
+                                    </div>
+                                    <div class="card-security">
+                                        <i class="fas fa-lock"></i>
+                                        <span>Thông tin thẻ được mã hóa và bảo mật</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="method-details" id="walletMethod">
+                                <div class="wallet-payment">
+                                    <h5>Ví điện tử</h5>
+                                    <div class="wallets">
+                                        <div class="wallet-option active">
+                                            <div class="wallet-icon">
+                                                <i class="fas fa-mobile-alt"></i>
+                                            </div>
+                                            <div class="wallet-name">Momo</div>
+                                        </div>
+                                        <div class="wallet-option">
+                                            <div class="wallet-icon">
+                                                <i class="fab fa-paypal"></i>
+                                            </div>
+                                            <div class="wallet-name">ZaloPay</div>
+                                        </div>
+                                        <div class="wallet-option">
+                                            <div class="wallet-icon">
+                                                <i class="fas fa-qrcode"></i>
+                                            </div>
+                                            <div class="wallet-name">VNPay</div>
+                                        </div>
+                                    </div>
+                                    <div class="wallet-instructions">
+                                        <p>Vui lòng mở ứng dụng ví điện tử và quét mã QR ở trên để thanh toán</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="method-details" id="cashMethod">
+                                <div class="cash-payment">
+                                    <h5>Thanh toán tiền mặt</h5>
+                                    <div class="cash-instructions">
+                                        <p><strong>Hướng dẫn:</strong></p>
+                                        <ol>
+                                            <li>Đến điểm bán vé gần nhất của TravelHub</li>
+                                            <li>Cung cấp mã đặt vé: <strong>ML789012</strong></li>
+                                            <li>Thanh toán tiền mặt và nhận vé</li>
+                                        </ol>
+                                        <div class="cash-locations">
+                                            <p><strong>Điểm bán vé:</strong></p>
+                                            <ul>
+                                                <li>123 Nguyễn Văn Linh, Q.7, TP.HCM</li>
+                                                <li>456 Trần Hưng Đạo, Q.1, TP.HCM</li>
+                                                <li>789 Lê Duẩn, Ba Đình, Hà Nội</li>
+                                            </ul>
+                                        </div>
+                                        <div class="cash-note">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            <p>Vui lòng thanh toán trong vòng 30 phút để giữ chỗ</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        
+                        <!-- Order Summary -->
+                        <aside class="order-summary">
+                            <h4>Tóm tắt thanh toán</h4>
+                            <div class="summary-items">
+                                <div class="summary-row">
+                                    <span class="label">Giá vé (2 người)</span>
+                                    <span class="value">900.000đ</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="label">Phí dịch vụ</span>
+                                    <span class="value">10.000đ</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="label">Phí thanh toán</span>
+                                    <span class="value" id="paymentFee">0đ</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="label">Khuyến mãi</span>
+                                    <span class="value discount">-50.000đ</span>
+                                </div>
+                                <div class="summary-row total">
+                                    <span class="label">Tổng thanh toán</span>
+                                    <span class="value" id="totalPayment">860.000đ</span>
+                                </div>
+                            </div>
+                            
+                            <div class="promo-code">
+                                <div class="promo-input">
+                                    <input type="text" placeholder="Nhập mã khuyến mãi" id="promoCode">
+                                    <button class="btn btn-outline btn-sm" id="applyPromoBtn">Áp dụng</button>
+                                </div>
+                                <div class="promo-suggestions">
+                                    <span>Có thể dùng:</span>
+                                    <span class="promo-tag">TET2025</span>
+                                    <span class="promo-tag">FIRSTBOOK</span>
+                                </div>
+                            </div>
+                        </aside>
+                        
+                        <!-- Payment Actions -->
+                        <div class="payment-actions">
+                            <a href="booking.html" class="back-btn">
+                                <i class="fas fa-arrow-left"></i> Quay lại
+                            </a>
+                            <button class="btn btn-primary pay-btn" id="confirmPaymentBtn">
+                                <i class="fas fa-lock"></i> Thanh toán an toàn
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Payment Success Modal -->
+    <div class="modal" id="paymentSuccessModal">
+        <div class="modal-content success-modal">
+            <div class="modal-header">
+                <h3>Thanh toán thành công!</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="success-message">
+                    <h4>Cảm ơn bạn đã đặt vé!</h4>
+                    <p>Vé của bạn đã được xác nhận và sẽ được gửi qua email trong vài phút.</p>
+                </div>
+                <div class="booking-details">
+                    <div class="detail">
+                        <span class="label">Mã đặt vé:</span>
+                        <span class="value">ML789012</span>
+                    </div>
+                    <div class="detail">
+                        <span class="label">Tổng thanh toán:</span>
+                        <span class="value">860.000đ</span>
+                    </div>
+                    <div class="detail">
+                        <span class="label">Phương thức:</span>
+                        <span class="value">QR Code</span>
+                    </div>
+                </div>
+                <div class="success-actions">
+                    <a href="my-tickets.html" class="btn btn-primary">
+                        <i class="fas fa-ticket-alt"></i> Xem vé đã đặt
+                    </a>
+                    <a href="index.html" class="btn btn-outline">
+                        <i class="fas fa-home"></i> Về trang chủ
+                    </a>
+                </div>
+                <div class="success-note">
+                    <i class="fas fa-info-circle"></i>
+                    <p>Vui lòng kiểm tra email và đến điểm đón trước 30 phút. Mang theo CMND/CCCD khi lên xe.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer (giống index.html) -->
+    <footer>
+        <!-- Nội dung giống index.html -->
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js"></script>
+    <script src="script.js"></script>
+    <script src="payment.js"></script>
+</body>
+</html>

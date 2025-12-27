@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chọn chỗ - TravelHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="payment.css">
+</head>
+<body>
+    <!-- Header (giống index.html) -->
+    <div class="top-banner">
+        <div class="container">
+            <span><i class="fas fa-shield-alt"></i> Đảm bảo giá tốt nhất - Hoàn 150% nếu tìm thấy rẻ hơn</span>
+        </div>
+    </div>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-compass"></i>
+                    <span>TRAVEL<span>HUB</span></span>
+                </a>
+                
+                <div class="booking-progress">
+                    <div class="progress-steps">
+                        <div class="step active">
+                            <span class="step-number">1</span>
+                            <span class="step-text">Chọn chỗ</span>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">2</span>
+                            <span class="step-text">Thông tin</span>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">3</span>
+                            <span class="step-text">Thanh toán</span>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">4</span>
+                            <span class="step-text">Hoàn tất</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="user-actions">
+                    <div class="timer">
+                        <i class="fas fa-clock"></i>
+                        <span id="bookingTimer">29:45</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Booking Page -->
+    <main class="booking-page">
+        <div class="container">
+            <div class="booking-container">
+                <!-- Trip Summary -->
+                <div class="trip-summary-card">
+                    <div class="summary-header">
+                        <h3>Chuyến xe của bạn</h3>
+                        <button class="btn btn-outline btn-sm" id="changeTripBtn">
+                            <i class="fas fa-exchange-alt"></i> Đổi chuyến
+                        </button>
+                    </div>
+                    
+                    <div class="trip-details">
+                        <div class="operator-info">
+                            <div class="operator-logo">
+                                <img src="https://via.placeholder.com/60x60/33FFCC/0A1F3C?text=ML" alt="Mai Linh">
+                            </div>
+                            <div class="operator-details">
+                                <h4>Mai Linh Express</h4>
+                                <div class="operator-rating">
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span>4.5 (2.5k đánh giá)</span>
+                                </div>
+                                <span class="bus-type">Xe giường nằm 45 chỗ</span>
+                            </div>
+                        </div>
+                        
+                        <div class="route-info">
+                            <div class="departure">
+                                <div class="time">22:00</div>
+                                <div class="date">31/12/2025</div>
+                                <div class="station">Bến xe Miền Đông</div>
+                            </div>
+                            
+                            <div class="journey-details">
+                                <div class="duration">
+                                    <i class="fas fa-clock"></i>
+                                    <span>7 giờ 30 phút</span>
+                                </div>
+                                <div class="distance">1,650 km</div>
+                                <div class="stops">Trực tiếp</div>
+                            </div>
+                            
+                            <div class="arrival">
+                                <div class="time">05:30</div>
+                                <div class="date">01/01/2026</div>
+                                <div class="station">Bến xe Giáp Bát</div>
+                            </div>
+                        </div>
+                        
+                        <div class="trip-features">
+                            <div class="feature">
+                                <i class="fas fa-wifi"></i>
+                                <span>WiFi</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-snowflake"></i>
+                                <span>Điều hòa</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-tv"></i>
+                                <span>TV</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-wine-bottle"></i>
+                                <span>Nước uống</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-utensils"></i>
+                                <span>Ăn uống</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Main Content -->
+                <div class="booking-content">
+                    <!-- Seat Selection -->
+                    <section class="seat-selection-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-chair"></i> Chọn chỗ ngồi</h2>
+                            <div class="selected-seats">
+                                <span>Đã chọn: </span>
+                                <span id="selectedSeatsCount">0</span> chỗ
+                                <span id="selectedSeatsList"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="bus-layout-container">
+                            <div class="bus-layout">
+                                <!-- Driver Area -->
+                                <div class="driver-area">
+                                    <div class="driver-icon">
+                                        <i class="fas fa-bus"></i>
+                                    </div>
+                                    <div class="driver-label">TÀI XẾ</div>
+                                </div>
+                                
+                                <!-- Seat Grid -->
+                                <div class="seat-grid" id="seatGrid">
+                                    <!-- Seats will be generated by JavaScript -->
+                                </div>
+                                
+                                <!-- Aisle -->
+                                <div class="aisle">
+                                    <div class="aisle-label">LỐI ĐI</div>
+                                </div>
+                                
+                                <!-- Toilet -->
+                                <div class="toilet-area">
+                                    <div class="toilet-icon">
+                                        <i class="fas fa-restroom"></i>
+                                    </div>
+                                    <div class="toilet-label">WC</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="seat-legend">
+                            <div class="legend-item">
+                                <div class="legend-color available"></div>
+                                <span>Còn trống</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color selected"></div>
+                                <span>Đang chọn</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color unavailable"></div>
+                                <span>Đã bán</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color vip"></div>
+                                <span>Ghế VIP</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color women"></div>
+                                <span>Ghế nữ</span>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Passenger Info -->
+                    <section class="passenger-info-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-user-friends"></i> Thông tin hành khách</h2>
+                            <div class="passenger-count">
+                                <span>Số lượng: </span>
+                                <span id="passengerCount">1</span> người
+                            </div>
+                        </div>
+                        
+                        <div class="passenger-forms" id="passengerForms">
+                            <!-- Passenger forms will be generated based on seat selection -->
+                            <div class="passenger-form">
+                                <h4>Hành khách 1 - Ghế <span class="seat-number">12</span></h4>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="passengerName1">Họ và tên *</label>
+                                        <input type="text" id="passengerName1" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="passengerPhone1">Số điện thoại *</label>
+                                        <input type="tel" id="passengerPhone1" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="passengerEmail1">Email</label>
+                                        <input type="email" id="passengerEmail1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="passengerGender1">Giới tính</label>
+                                        <select id="passengerGender1">
+                                            <option value="">Chọn giới tính</option>
+                                            <option value="male">Nam</option>
+                                            <option value="female">Nữ</option>
+                                            <option value="other">Khác</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="passengerType1">Loại hành khách</label>
+                                        <select id="passengerType1">
+                                            <option value="adult">Người lớn</option>
+                                            <option value="child">Trẻ em</option>
+                                            <option value="student">Sinh viên</option>
+                                            <option value="elderly">Người cao tuổi</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="passengerId1">CMND/CCCD</label>
+                                        <input type="text" id="passengerId1">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Contact Info -->
+                    <section class="contact-info-section">
+                        <h3><i class="fas fa-address-book"></i> Thông tin liên hệ</h3>
+                        <div class="contact-form">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="contactName">Người liên hệ *</label>
+                                    <input type="text" id="contactName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contactPhone">Số điện thoại *</label>
+                                    <input type="tel" id="contactPhone" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contactEmail">Email nhận vé *</label>
+                                    <input type="email" id="contactEmail" required>
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="specialRequest">Yêu cầu đặc biệt</label>
+                                    <textarea id="specialRequest" rows="3" placeholder="Ví dụ: Chỗ ngồi gần cửa, cần hỗ trợ đặc biệt..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Booking Summary -->
+                    <aside class="booking-summary">
+                        <div class="summary-card">
+                            <h3>Tóm tắt đặt vé</h3>
+                            
+                            <div class="summary-details">
+                                <div class="detail-row">
+                                    <span>Số ghế:</span>
+                                    <span id="summarySeats">--</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span>Số người:</span>
+                                    <span id="summaryPassengers">0</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span>Giá vé:</span>
+                                    <span id="summaryTicketPrice">0đ</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span>Phí dịch vụ:</span>
+                                    <span>10.000đ</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span>Phí thanh toán:</span>
+                                    <span>0đ</span>
+                                </div>
+                                <div class="detail-row total">
+                                    <span>Tổng cộng:</span>
+                                    <span id="summaryTotalPrice">0đ</span>
+                                </div>
+                            </div>
+                            
+                            <div class="summary-actions">
+                                <button class="btn btn-primary btn-block" id="continueToPaymentBtn" disabled>
+                                    <i class="fas fa-arrow-right"></i> Tiếp tục thanh toán
+                                </button>
+                                <p class="terms-note">
+                                    Bằng việc tiếp tục, bạn đồng ý với 
+                                    <a href="#">Điều khoản dịch vụ</a> và 
+                                    <a href="#">Chính sách bảo mật</a> của TravelHub
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="booking-policies">
+                            <h4>Chính sách đặt vé</h4>
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> Giữ chỗ 30 phút chờ thanh toán</li>
+                                <li><i class="fas fa-check-circle"></i> Hoàn vé trước 24h: 90% giá vé</li>
+                                <li><i class="fas fa-check-circle"></i> Hoàn vé trước 12h: 70% giá vé</li>
+                                <li><i class="fas fa-check-circle"></i> Đổi vé miễn phí trước 24h</li>
+                            </ul>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer (giống index.html) -->
+    <footer>
+        <!-- Nội dung giống index.html -->
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="booking.js"></script>
+</body>
+</html>

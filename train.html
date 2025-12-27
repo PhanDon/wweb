@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt Vé Tàu Hỏa - TravelHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="train.css">
+</head>
+<body>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <div class="container">
+            <span><i class="fas fa-shield-alt"></i> Đảm bảo giá tốt nhất - Hoàn 150% nếu tìm thấy rẻ hơn</span>
+            <div class="banner-actions">
+                <a href="#"><i class="fas fa-question-circle"></i> Trợ giúp</a>
+                <a href="#"><i class="fas fa-globe"></i> Tiếng Việt</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-compass"></i>
+                    <span>TRAVEL<span>HUB</span></span>
+                </a>
+                
+                <!-- Main Navigation -->
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-home"></i> Trang chủ</a></li>
+                        <li><a href="bus.html"><i class="fas fa-bus"></i> Vé xe</a></li>
+                        <li><a href="plane.html"><i class="fas fa-plane"></i> Vé máy bay</a></li>
+                        <li><a href="train.html" class="active"><i class="fas fa-train"></i> Vé tàu</a></li>
+                        <li><a href="my-tickets.html"><i class="fas fa-ticket-alt"></i> Vé đã đặt</a></li>
+                    </ul>
+                </nav>
+                
+                <!-- User Actions -->
+                <div class="user-actions">
+                    <a href="#" class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </a>
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=Nguyen+Van+A&background=33FFCC&color=0A1F3C&bold=true" alt="User">
+                        <span>Nguyễn Văn A</span>
+                        <i class="fas fa-chevron-down"></i>
+                        <div class="user-dropdown">
+                            <a href="profile.html"><i class="fas fa-user-circle"></i> Tài khoản</a>
+                            <a href="my-tickets.html"><i class="fas fa-ticket-alt"></i> Vé đã đặt</a>
+                            <a href="history.html"><i class="fas fa-history"></i> Lịch sử</a>
+                            <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline btn-sm">Đăng nhập</button>
+                </div>
+                
+                <!-- Mobile Menu Toggle -->
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav" id="mobileNav">
+            <div class="mobile-user">
+                <img src="https://ui-avatars.com/api/?name=Nguyen+Van+A&background=33FFCC&color=0A1F3C&bold=true" alt="User">
+                <div>
+                    <h4>Nguyễn Văn A</h4>
+                    <span>Xem hồ sơ</span>
+                </div>
+            </div>
+            <nav>
+                <a href="index.html"><i class="fas fa-home"></i> Trang chủ</a>
+                <a href="bus.html"><i class="fas fa-bus"></i> Vé xe</a>
+                <a href="plane.html"><i class="fas fa-plane"></i> Vé máy bay</a>
+                <a href="train.html" class="active"><i class="fas fa-train"></i> Vé tàu</a>
+                <a href="my-tickets.html"><i class="fas fa-ticket-alt"></i> Vé đã đặt</a>
+                <a href="profile.html"><i class="fas fa-user-circle"></i> Tài khoản</a>
+                <a href="history.html"><i class="fas fa-history"></i> Lịch sử</a>
+                <a href="#"><i class="fas fa-question-circle"></i> Trợ giúp</a>
+                <a href="#" id="logoutBtnMobile"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Train Booking Page -->
+    <main class="train-booking-page">
+        <div class="container">
+            <div class="page-header">
+                <h1><i class="fas fa-train"></i> Đặt Vé Tàu Hỏa</h1>
+                <p>Chọn chuyến tàu và chỗ ngồi phù hợp với hành trình của bạn</p>
+            </div>
+            
+            <div class="booking-container">
+                <!-- Search Form -->
+                <div class="search-form-card">
+                    <form id="trainSearchForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="fas fa-map-marker-alt"></i> Ga đi</label>
+                                <div class="input-with-icon">
+                                    <input type="text" class="form-control" id="trainFrom" placeholder="Nhập ga đi" value="Ga Sài Gòn">
+                                    <button type="button" class="location-btn" title="Vị trí hiện tại">
+                                        <i class="fas fa-crosshairs"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-map-marker-alt"></i> Ga đến</label>
+                                <div class="input-with-icon">
+                                    <input type="text" class="form-control" id="trainTo" placeholder="Nhập ga đến" value="Ga Hà Nội">
+                                    <button type="button" class="swap-btn" id="swapTrainLocations" title="Đổi ga đi/đến">
+                                        <i class="fas fa-exchange-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="far fa-calendar"></i> Ngày đi</label>
+                                <input type="date" class="form-control" id="trainDepartDate">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-train"></i> Loại tàu</label>
+                                <select class="form-control" id="trainType">
+                                    <option value="express">Tàu SE - Thống nhất</option>
+                                    <option value="fast">Tàu TN - Nhanh</option>
+                                    <option value="local">Tàu LC - Địa phương</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-user-friends"></i> Hành khách</label>
+                                <div class="passenger-selector" id="trainPassengerSelector">
+                                    <div class="passenger-display">
+                                        <span id="trainPassengerCount">1</span> hành khách
+                                    </div>
+                                    <div class="passenger-dropdown">
+                                        <div class="passenger-type">
+                                            <span>Người lớn</span>
+                                            <div class="passenger-controls">
+                                                <button type="button" class="passenger-btn minus" data-type="adult">-</button>
+                                                <span class="count" id="trainAdultCount">1</span>
+                                                <button type="button" class="passenger-btn plus" data-type="adult">+</button>
+                                            </div>
+                                        </div>
+                                        <div class="passenger-type">
+                                            <span>Trẻ em (5-11 tuổi)</span>
+                                            <div class="passenger-controls">
+                                                <button type="button" class="passenger-btn minus" data-type="child">-</button>
+                                                <span class="count" id="trainChildCount">0</span>
+                                                <button type="button" class="passenger-btn plus" data-type="child">+</button>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-sm" id="applyTrainPassengers">Xong</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-search">
+                            <i class="fas fa-search"></i> Tìm chuyến tàu
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Train Selection -->
+                <div class="train-selection-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-train"></i> Chọn chuyến tàu</h2>
+                        <div class="selected-train-info">
+                            <span>Đã chọn: <strong id="selectedTrainCount">0</strong> chuyến</span>
+                        </div>
+                    </div>
+                    
+                    <div class="trains-list">
+                        <!-- Train cards will be populated by JavaScript -->
+                        <div class="train-card selected">
+                            <div class="train-header">
+                                <div class="train-info">
+                                    <img src="https://via.placeholder.com/60x60/0066CC/FFFFFF?text=SE" alt="SE Express">
+                                    <div>
+                                        <h4>SE1 - Thống Nhất</h4>
+                                        <span class="train-class">Giường nằm khoang 4</span>
+                                    </div>
+                                </div>
+                                <div class="train-price">
+                                    <span class="price">1.250.000đ</span>
+                                    <span class="per-person">/người</span>
+                                </div>
+                            </div>
+                            
+                            <div class="train-details">
+                                <div class="route">
+                                    <div class="departure">
+                                        <div class="time">19:30</div>
+                                        <div class="station">Ga Sài Gòn</div>
+                                    </div>
+                                    <div class="duration">
+                                        <i class="fas fa-clock"></i>
+                                        <span>32h00</span>
+                                        <div class="stops">5 ga dừng</div>
+                                    </div>
+                                    <div class="arrival">
+                                        <div class="time">03:30</div>
+                                        <div class="station">Ga Hà Nội (+2 ngày)</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="train-features">
+                                    <div class="feature">
+                                        <i class="fas fa-bed"></i>
+                                        <span>Giường nằm</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-utensils"></i>
+                                        <span>Ăn uống</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-wifi"></i>
+                                        <span>WiFi</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-snowflake"></i>
+                                        <span>Điều hòa</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="train-actions">
+                                <button class="btn btn-outline btn-sm seat-select-btn">
+                                    <i class="fas fa-chair"></i> Chọn chỗ
+                                </button>
+                                <button class="btn btn-primary btn-sm select-train-btn">
+                                    <i class="fas fa-check"></i> Chọn chuyến
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- More train cards would go here -->
+                    </div>
+                </div>
+                
+                <!-- Train Seat Selection -->
+                <div class="train-seat-section" id="seatSelectionSection" style="display: none;">
+                    <div class="section-header">
+                        <h2><i class="fas fa-chair"></i> Chọn chỗ ngồi trên tàu</h2>
+                        <div class="selected-seats-info">
+                            <span>Đã chọn: <strong id="trainSelectedCount">0</strong> chỗ</span>
+                            <span id="trainSelectedList"></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Compartment Selection -->
+                    <div class="compartment-selector">
+                        <h4>Chọn toa và khoang</h4>
+                        <div class="compartment-options">
+                            <div class="compartment-option active" data-compartment="1">
+                                <span class="compartment-name">Toa 5 - Khoang 4</span>
+                                <span class="compartment-type">Giường nằm khoang 4</span>
+                            </div>
+                            <div class="compartment-option" data-compartment="2">
+                                <span class="compartment-name">Toa 6 - Khoang 4</span>
+                                <span class="compartment-type">Giường nằm khoang 4</span>
+                            </div>
+                            <div class="compartment-option" data-compartment="3">
+                                <span class="compartment-name">Toa 7 - Khoang 6</span>
+                                <span class="compartment-type">Giường nằm khoang 6</span>
+                            </div>
+                            <div class="compartment-option" data-compartment="4">
+                                <span class="compartment-name">Toa 8 - Ghế ngồi</span>
+                                <span class="compartment-type">Ghế ngồi điều hòa</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Train Layout -->
+                    <div class="train-layout-container">
+                        <!-- Compartment Layout (4 berths per compartment, 20 compartments = 80 seats) -->
+                        <div class="train-compartment active" id="compartment1">
+                            <div class="compartment-header">
+                                <h4>Toa 5 - Khoang 4 (4 giường/khoang)</h4>
+                                <div class="compartment-info">20 khoang × 4 giường = 80 chỗ</div>
+                            </div>
+                            
+                            <div class="compartments-grid">
+                                <!-- Compartments 1-20 will be generated by JavaScript -->
+                                <!-- Sample compartment shown here -->
+                                <div class="compartment-unit">
+                                    <div class="compartment-number">Khoang 1</div>
+                                    <div class="berth-layout">
+                                        <div class="upper-berths">
+                                            <div class="berth upper" data-berth="1A">
+                                                <span class="berth-number">1A</span>
+                                                <span class="berth-type">Trên</span>
+                                            </div>
+                                            <div class="berth upper" data-berth="1B">
+                                                <span class="berth-number">1B</span>
+                                                <span class="berth-type">Trên</span>
+                                            </div>
+                                        </div>
+                                        <div class="lower-berths">
+                                            <div class="berth lower" data-berth="1C">
+                                                <span class="berth-number">1C</span>
+                                                <span class="berth-type">Dưới</span>
+                                            </div>
+                                            <div class="berth lower" data-berth="1D">
+                                                <span class="berth-number">1D</span>
+                                                <span class="berth-type">Dưới</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- More compartments would be generated dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Seat/Berth Legend -->
+                    <div class="seat-legend">
+                        <div class="legend-item">
+                            <div class="legend-color available"></div>
+                            <span>Còn trống</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color selected"></div>
+                            <span>Đang chọn</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color unavailable"></div>
+                            <span>Đã bán</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color upper"></div>
+                            <span>Giường trên</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color lower"></div>
+                            <span>Giường dưới</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Booking Summary -->
+                <div class="booking-summary-card">
+                    <h3><i class="fas fa-receipt"></i> Tóm tắt đặt vé</h3>
+                    
+                    <div class="summary-details">
+                        <div class="detail-row">
+                            <span>Tuyến tàu:</span>
+                            <span id="trainRoute">SGN → HAN</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Ngày đi:</span>
+                            <span id="trainDate">--/--/----</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Loại vé:</span>
+                            <span id="trainClass">Giường nằm khoang 4</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Số giường:</span>
+                            <span id="trainSeatsSummary">--</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Số người:</span>
+                            <span id="trainPassengersSummary">1</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Giá vé:</span>
+                            <span id="trainTicketPrice">0đ</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Phí dịch vụ:</span>
+                            <span>30.000đ</span>
+                        </div>
+                        <div class="detail-row total">
+                            <span>Tổng cộng:</span>
+                            <span id="trainTotalPrice">0đ</span>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary btn-block" id="trainContinueBtn" disabled>
+                        <i class="fas fa-arrow-right"></i> Tiếp tục đặt vé
+                    </button>
+                    
+                    <div class="booking-policies">
+                        <h4><i class="fas fa-info-circle"></i> Chính sách đặt vé</h4>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Hoàn vé trước 24h: 90% giá vé</li>
+                            <li><i class="fas fa-check-circle"></i> Hoàn vé trước 12h: 70% giá vé</li>
+                            <li><i class="fas fa-check-circle"></i> Đổi vé miễn phí trước 24h</li>
+                            <li><i class="fas fa-check-circle"></i> Check-in tại ga trước 1h</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Same Payment and QR Modals as bus.html -->
+    <!-- Payment Modal -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-credit-card"></i> Chọn phương thức thanh toán</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="payment-methods">
+                    <div class="payment-method" data-method="cash">
+                        <div class="method-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="method-info">
+                            <h4>Thanh toán tiền mặt</h4>
+                            <p>Thanh toán trực tiếp tại văn phòng TravelHub hoặc ga tàu</p>
+                        </div>
+                        <div class="method-select">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-method" data-method="transfer">
+                        <div class="method-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <div class="method-info">
+                            <h4>Chuyển khoản ngân hàng</h4>
+                            <p>Chuyển khoản qua Internet Banking/Mobile Banking</p>
+                        </div>
+                        <div class="method-select">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-method" data-method="card">
+                        <div class="method-icon">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="method-info">
+                            <h4>Thẻ tín dụng/ghi nợ</h4>
+                            <p>Visa, Mastercard, JCB, Napas</p>
+                        </div>
+                        <div class="method-select">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-method" data-method="ewallet">
+                        <div class="method-icon">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="method-info">
+                            <h4>Ví điện tử</h4>
+                            <p>Momo, ZaloPay, VNPay, ShopeePay</p>
+                        </div>
+                        <div class="method-select">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- QR Payment Modal -->
+    <div class="modal-overlay" id="qrModal">
+        <div class="modal-content qr-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-qrcode"></i> Thanh toán qua QR Code</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="qr-container">
+                    <div class="qr-code-placeholder">
+                        <div id="qrCodeDisplay">
+                            <div class="qr-placeholder">
+                                <i class="fas fa-qrcode"></i>
+                                <p>Mã QR thanh toán</p>
+                                <p class="qr-note">(QR thực sẽ được tạo theo thời gian thực)</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="qr-instructions">
+                        <h4>Hướng dẫn thanh toán:</h4>
+                        <ol>
+                            <li>Mở ứng dụng ngân hàng hoặc ví điện tử</li>
+                            <li>Chọn tính năng "Quét mã QR"</li>
+                            <li>Quét mã QR bên cạnh</li>
+                            <li>Kiểm tra thông tin và xác nhận thanh toán</li>
+                            <li>Giữ lại hóa đơn để đối chiếu</li>
+                        </ol>
+                        
+                        <div class="payment-details">
+                            <div class="detail-row">
+                                <span>Số tiền:</span>
+                                <span class="amount" id="qrAmount">0đ</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>Nội dung:</span>
+                                <span id="qrContent">THTRAIN000000</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>Thời hạn:</span>
+                                <span class="timeout" id="qrTimeout">15:00 phút</span>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary btn-block" id="confirmPaymentBtn">
+                            <i class="fas fa-check-circle"></i> Tôi đã thanh toán xong
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-compass"></i>
+                        <span>TRAVEL<span>HUB</span></span>
+                    </div>
+                    <p>Nền tảng đặt vé xe khách, máy bay, tàu hỏa hàng đầu Việt Nam.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Về TravelHub</h4>
+                    <ul>
+                        <li><a href="#">Giới thiệu</a></li>
+                        <li><a href="#">Tuyển dụng</a></li>
+                        <li><a href="#">Liên hệ</a></li>
+                        <li><a href="#">Tin tức</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Hỗ trợ</h4>
+                    <ul>
+                        <li><a href="#">Câu hỏi thường gặp</a></li>
+                        <li><a href="#">Hướng dẫn đặt vé</a></li>
+                        <li><a href="#">Chính sách hoàn vé</a></li>
+                        <li><a href="#">Điều khoản sử dụng</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Đối tác</h4>
+                    <ul>
+                        <li><a href="#">Đường sắt Việt Nam</a></li>
+                        <li><a href="#">Quy chế hoạt động</a></li>
+                        <li><a href="#">Trở thành đối tác</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Liên hệ</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Nguyễn Văn Linh, Q.7, TP.HCM</li>
+                        <li><i class="fas fa-phone"></i> 1900 1234</li>
+                        <li><i class="fas fa-envelope"></i> support@travelhub.vn</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 TravelHub. Bản quyền thuộc về TravelHub Vietnam.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa" title="Visa"></i>
+                    <i class="fab fa-cc-mastercard" title="Mastercard"></i>
+                    <i class="fab fa-cc-jcb" title="JCB"></i>
+                    <i class="fas fa-qrcode" title="QR Code"></i>
+                    <i class="fas fa-wallet" title="Ví điện tử"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="train.js"></script>
+</body>
+</html>

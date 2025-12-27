@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tìm chuyến đi - Vexere</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="search.css">
+</head>
+<body>
+    <!-- Header (giống index.html) -->
+    <div class="top-banner">
+        <div class="container">
+            <span><i class="fas fa-shield-alt"></i> Đảm bảo giá tốt nhất - Hoàn 150% nếu tìm thấy rẻ hơn</span>
+        </div>
+    </div>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-bus"></i>
+                    <span>VEXERE</span>
+                </a>
+                
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-home"></i> Trang chủ</a></li>
+                        <li><a href="bus.html" class="active"><i class="fas fa-bus"></i> Vé xe</a></li>
+                        <li><a href="flight.html"><i class="fas fa-plane"></i> Vé máy bay</a></li>
+                        <li><a href="train.html"><i class="fas fa-train"></i> Vé tàu</a></li>
+                        <li><a href="combo.html"><i class="fas fa-gift"></i> Combo</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="user-actions">
+                    <a href="my-tickets.html" class="btn btn-outline btn-sm">
+                        <i class="fas fa-ticket-alt"></i> Vé của tôi
+                    </a>
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=Nguyen+Van+A&background=33FFCC&color=0A1F3C&bold=true" alt="User">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation (giống index.html) -->
+        <div class="mobile-nav" id="mobileNav">
+            <!-- Nội dung giống index.html -->
+        </div>
+    </header>
+
+    <!-- Search Results Page -->
+    <main class="search-results-page">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>Tìm chuyến đi</h1>
+                <p>Chọn chuyến đi phù hợp với lịch trình của bạn</p>
+            </div>
+            
+            <!-- Search Summary -->
+            <div class="search-summary">
+                <div class="search-info">
+                    <div class="route-info">
+                        <span class="from">TP.HCM</span>
+                        <i class="fas fa-arrow-right"></i>
+                        <span class="to">HÀ NỘI</span>
+                    </div>
+                    <div class="date-info">
+                        <i class="far fa-calendar"></i>
+                        <span>Thứ tư, 31/12/2025</span>
+                    </div>
+                    <div class="passenger-info">
+                        <i class="fas fa-user-friends"></i>
+                        <span>1 hành khách</span>
+                    </div>
+                </div>
+                <button class="btn btn-outline btn-sm" id="modifySearch">
+                    <i class="fas fa-edit"></i> Sửa tìm kiếm
+                </button>
+            </div>
+            
+            <div class="results-container">
+                <!-- Filters Sidebar -->
+                <aside class="filters-sidebar">
+                    <div class="filters-header">
+                        <h3><i class="fas fa-sliders-h"></i> Bộ lọc</h3>
+                        <button class="clear-filters">Xóa tất cả</button>
+                    </div>
+                    
+                    <!-- Filter: Departure Time -->
+                    <div class="filter-section">
+                        <h4>Giờ khởi hành</h4>
+                        <div class="filter-options">
+                            <label class="filter-checkbox">
+                                <input type="checkbox" checked>
+                                <span class="checkmark"></span>
+                                Sáng (5h - 12h)
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" checked>
+                                <span class="checkmark"></span>
+                                Chiều (12h - 18h)
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                                Tối (18h - 24h)
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                                Đêm (0h - 5h)
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Filter: Operators -->
+                    <div class="filter-section">
+                        <h4>Hãng vận chuyển</h4>
+                        <div class="filter-options">
+                            <label class="filter-checkbox">
+                                <input type="checkbox" checked>
+                                <span class="checkmark"></span>
+                                Mai Linh
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" checked>
+                                <span class="checkmark"></span>
+                                Phương Trang
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                                Hoàng Long
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                                Vietnam Airlines
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Filter: Ticket Type -->
+                    <div class="filter-section">
+                        <h4>Loại vé</h4>
+                        <div class="filter-options">
+                            <label class="filter-checkbox">
+                                <input type="checkbox" checked>
+                                <span class="checkmark"></span>
+                                Ghế ngồi
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                                Giường nằm
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                                VIP
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Filter: Price Range -->
+                    <div class="filter-section">
+                        <h4>Mức giá</h4>
+                        <div class="price-range">
+                            <input type="range" min="0" max="1000000" value="500000" class="price-slider" id="priceSlider">
+                            <div class="price-labels">
+                                <span>0đ</span>
+                                <span>500.000đ</span>
+                                <span>1.000.000đ</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Filter: Facilities -->
+                    <div class="filter-section">
+                        <h4>Tiện nghi</h4>
+                        <div class="filter-options">
+                            <label class="filter-checkbox">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                                <i class="fas fa-wifi"></i> WiFi
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                                <i class="fas fa-tv"></i> TV
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                                <i class="fas fa-snowflake"></i> Điều hòa
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                                <i class="fas fa-utensils"></i> Ăn uống
+                            </label>
+                        </div>
+                    </div>
+                </aside>
+                
+                <!-- Results Main Content -->
+                <div class="results-main">
+                    <!-- Results Header -->
+                    <div class="results-header">
+                        <div class="results-count">
+                            <h3>Kết quả tìm kiếm</h3>
+                            <span class="count">12 chuyến xe được tìm thấy</span>
+                        </div>
+                        <div class="sort-options">
+                            <label>Sắp xếp:</label>
+                            <select id="sortSelect">
+                                <option value="price_asc">Giá thấp đến cao</option>
+                                <option value="price_desc">Giá cao đến thấp</option>
+                                <option value="time_asc">Giờ sớm nhất</option>
+                                <option value="time_desc">Giờ muộn nhất</option>
+                                <option value="rating_desc">Đánh giá cao nhất</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Trip Results -->
+                    <div class="trip-results" id="tripResults">
+                        <!-- Trip cards sẽ được tải bằng JavaScript -->
+                        <div class="loading-results">
+                            <div class="spinner"></div>
+                            <p>Đang tải kết quả...</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <button class="page-btn disabled">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <button class="page-btn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer (giống index.html) -->
+    <footer>
+        <!-- Nội dung giống index.html -->
+    </footer>
+
+    <!-- Modify Search Modal -->
+    <div class="modal" id="modifySearchModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Sửa tìm kiếm</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Form sửa tìm kiếm sẽ được thêm ở đây -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="search.js"></script>
+</body>
+</html>
