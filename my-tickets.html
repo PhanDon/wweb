@@ -8,6 +8,595 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="tickets.css">
+    <style>
+        /* Additional styles for enhanced UX */
+        :root {
+            --primary-color: #2563eb;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --gray-light: #f8fafc;
+            --gray-border: #e2e8f0;
+            --bus-color: #3b82f6;
+            --plane-color: #8b5cf6;
+            --train-color: #10b981;
+        }
+        
+        .my-tickets-page {
+            min-height: 80vh;
+            padding: 40px 0;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+        
+        .page-header p {
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+        
+        .tickets-filter {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+        
+        .filter-tabs {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .filter-tab {
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: 2px solid var(--gray-border);
+            background: white;
+            font-weight: 600;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .filter-tab:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .filter-tab.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+        
+        .tab-count {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .search-box {
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            border: 2px solid var(--gray-border);
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+        }
+        
+        .tickets-section {
+            margin-bottom: 50px;
+        }
+        
+        .tickets-section h3 {
+            font-size: 1.5rem;
+            color: #1e293b;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tickets-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 25px;
+            justify-items: center;
+        }
+        
+        @media (max-width: 768px) {
+            .tickets-list {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .ticket-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+            max-width: 450px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .ticket-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* NEW: Header layout with status on left and type/date on right */
+        .ticket-header {
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color), #3b82f6);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            min-height: 100px;
+        }
+        
+        .ticket-left {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .ticket-right {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .status-badge {
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            display: inline-block;
+            width: fit-content;
+        }
+        
+        .status-badge.upcoming {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--primary-color);
+        }
+        
+        .status-badge.hold {
+            background: var(--warning-color);
+            color: white;
+        }
+        
+        .status-badge.completed {
+            background: var(--success-color);
+            color: white;
+        }
+        
+        .status-badge.cancelled {
+            background: var(--danger-color);
+            color: white;
+        }
+        
+        .ticket-code {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+        
+        .ticket-type {
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .ticket-type.bus {
+            color: #ffd700;
+        }
+        
+        .ticket-type.plane {
+            color: #87ceeb;
+        }
+        
+        .ticket-type.train {
+            color: #98fb98;
+        }
+        
+        .ticket-date {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        
+        .ticket-date .date {
+            font-size: 1.4rem;
+            font-weight: 800;
+            display: block;
+        }
+        
+        .ticket-date .time {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 600;
+            display: block;
+        }
+        
+        .ticket-body {
+            padding: 25px;
+            flex-grow: 1;
+        }
+        
+        .ticket-route {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+        
+        .from, .to {
+            flex: 1;
+        }
+        
+        .city {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+        
+        .station {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+        
+        .route-arrow {
+            padding: 0 20px;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+        
+        .ticket-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-border);
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #475569;
+        }
+        
+        .info-item i {
+            color: var(--primary-color);
+            width: 20px;
+        }
+        
+        .ticket-footer {
+            padding: 20px;
+            background: var(--gray-light);
+            border-top: 1px solid var(--gray-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .ticket-price .price {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            display: block;
+        }
+        
+        .ticket-price .status {
+            font-size: 0.9rem;
+            color: var(--success-color);
+            font-weight: 600;
+        }
+        
+        .ticket-price .status.pending {
+            color: var(--warning-color);
+        }
+        
+        .ticket-price .status.cancelled {
+            color: var(--danger-color);
+        }
+        
+        .ticket-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+        
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+        
+        .btn-outline {
+            background: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background: var(--gray-light);
+        }
+        
+        .btn-danger {
+            background: var(--danger-color);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+        
+        .btn-warning {
+            background: var(--warning-color);
+            color: white;
+        }
+        
+        .btn-warning:hover {
+            background: #d97706;
+        }
+        
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #059669;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            max-width: 500px;
+            margin: 0 auto;
+            grid-column: 1 / -1;
+        }
+        
+        .empty-icon {
+            font-size: 4rem;
+            color: #cbd5e1;
+            margin-bottom: 20px;
+        }
+        
+        .empty-state h3 {
+            font-size: 1.8rem;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+        
+        .empty-state p {
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+        
+        .booking-options {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        /* Modal improvements */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            padding: 25px;
+            border-bottom: 1px solid var(--gray-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #1e293b;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: #64748b;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-close:hover {
+            color: var(--danger-color);
+        }
+        
+        .modal-body {
+            padding: 25px;
+        }
+        
+        /* Ticket details styles */
+        .ticket-details-container {
+            display: grid;
+            gap: 30px;
+        }
+        
+        .detail-section {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+        }
+        
+        .detail-section h4 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-row span:first-child {
+            font-weight: 600;
+            color: #475569;
+        }
+        
+        .detail-row span:last-child {
+            font-weight: 500;
+            color: #1e293b;
+            text-align: right;
+        }
+        
+        .passenger-list {
+            display: grid;
+            gap: 10px;
+        }
+        
+        .passenger-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        /* Utility classes */
+        .text-center {
+            text-align: center;
+        }
+        
+        .mt-4 {
+            margin-top: 40px;
+        }
+        
+        .mb-4 {
+            margin-bottom: 40px;
+        }
+        
+        .w-100 {
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
     <!-- Header (giống index.html) -->
@@ -29,7 +618,7 @@
                     <ul>
                         <li><a href="index.html"><i class="fas fa-home"></i> Trang chủ</a></li>
                         <li><a href="bus.html"><i class="fas fa-bus"></i> Vé xe</a></li>
-                        <li><a href="flight.html"><i class="fas fa-plane"></i> Vé máy bay</a></li>
+                        <li><a href="plane.html"><i class="fas fa-plane"></i> Vé máy bay</a></li>
                         <li><a href="train.html"><i class="fas fa-train"></i> Vé tàu</a></li>
                         <li><a href="my-tickets.html" class="active"><i class="fas fa-ticket-alt"></i> Vé đã đặt</a></li>
                     </ul>
@@ -38,7 +627,7 @@
                 <div class="user-actions">
                     <a href="#" class="notifications">
                         <i class="fas fa-bell"></i>
-                        <span class="badge">3</span>
+                        <span class="badge">0</span>
                     </a>
                     <div class="user-profile">
                         <img src="https://ui-avatars.com/api/?name=Nguyen+Van+A&background=33FFCC&color=0A1F3C&bold=true" alt="User">
@@ -71,19 +660,19 @@
                 <div class="filter-tabs">
                     <button class="filter-tab active" data-filter="all">
                         <span>Tất cả</span>
-                        <span class="tab-count">18</span>
+                        <span class="tab-count">0</span>
                     </button>
                     <button class="filter-tab" data-filter="upcoming">
                         <span>Sắp tới</span>
-                        <span class="tab-count">3</span>
+                        <span class="tab-count">0</span>
                     </button>
                     <button class="filter-tab" data-filter="completed">
                         <span>Đã đi</span>
-                        <span class="tab-count">12</span>
+                        <span class="tab-count">0</span>
                     </button>
                     <button class="filter-tab" data-filter="cancelled">
                         <span>Đã hủy</span>
-                        <span class="tab-count">3</span>
+                        <span class="tab-count">0</span>
                     </button>
                 </div>
                 
@@ -93,222 +682,51 @@
                 </div>
             </div>
             
-            <!-- Tickets List -->
+            <!-- Tickets List (EMPTY - no demo tickets) -->
             <div class="tickets-container">
-                <!-- Active Tickets -->
+                <!-- Active Tickets Section -->
                 <div class="tickets-section">
                     <h3><i class="fas fa-clock"></i> Chuyến sắp tới</h3>
                     <div class="tickets-list" id="upcomingTickets">
-                        <!-- Tickets will be loaded here -->
-                        <div class="ticket-card active">
-                            <div class="ticket-header">
-                                <div class="ticket-status">
-                                    <span class="status-badge upcoming">SẮP TỚI</span>
-                                    <span class="ticket-code">Mã vé: ML-789012</span>
-                                </div>
-                                <div class="ticket-date">
-                                    <span class="date">31/12/2025</span>
-                                    <span class="time">22:00</span>
-                                </div>
-                            </div>
-                            
-                            <div class="ticket-body">
-                                <div class="ticket-route">
-                                    <div class="from">
-                                        <div class="city">TP.HCM</div>
-                                        <div class="station">Bến xe Miền Đông</div>
-                                    </div>
-                                    <div class="route-arrow">
-                                        <i class="fas fa-long-arrow-alt-right"></i>
-                                    </div>
-                                    <div class="to">
-                                        <div class="city">HÀ NỘI</div>
-                                        <div class="station">Bến xe Giáp Bát</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="ticket-info">
-                                    <div class="info-item">
-                                        <i class="fas fa-bus"></i>
-                                        <span>Mai Linh</span>
-                                    </div>
-                                    <div class="info-item">
-                                        <i class="fas fa-chair"></i>
-                                        <span>Ghế: 12, 13</span>
-                                    </div>
-                                    <div class="info-item">
-                                        <i class="fas fa-user-friends"></i>
-                                        <span>2 người</span>
-                                    </div>
-                                    <div class="info-item">
-                                        <i class="fas fa-clock"></i>
-                                        <span>7h30</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="ticket-footer">
-                                <div class="ticket-price">
-                                    <span class="price">900.000đ</span>
-                                    <span class="status">Đã thanh toán</span>
-                                </div>
-                                <div class="ticket-actions">
-                                    <button class="btn btn-outline btn-sm view-qr-btn">
-                                        <i class="fas fa-qrcode"></i> QR Code
-                                    </button>
-                                    <button class="btn btn-primary btn-sm details-btn">
-                                        <i class="fas fa-info-circle"></i> Chi tiết
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="ticket-card active">
-                            <div class="ticket-header">
-                                <div class="ticket-status">
-                                    <span class="status-badge hold">ĐANG GIỮ</span>
-                                    <span class="ticket-code">Mã vé: VN-456123</span>
-                                </div>
-                                <div class="ticket-date">
-                                    <span class="date">20/12/2025</span>
-                                    <span class="time">14:30</span>
-                                </div>
-                            </div>
-                            
-                            <div class="ticket-body">
-                                <div class="ticket-route">
-                                    <div class="from">
-                                        <div class="city">TP.HCM</div>
-                                        <div class="station">Sân bay TSN</div>
-                                    </div>
-                                    <div class="route-arrow">
-                                        <i class="fas fa-long-arrow-alt-right"></i>
-                                    </div>
-                                    <div class="to">
-                                        <div class="city">HÀ NỘI</div>
-                                        <div class="station">Sân bay Nội Bài</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="ticket-info">
-                                    <div class="info-item">
-                                        <i class="fas fa-plane"></i>
-                                        <span>Vietnam Airlines</span>
-                                    </div>
-                                    <div class="info-item">
-                                        <i class="fas fa-chair"></i>
-                                        <span>Ghế: 15A</span>
-                                    </div>
-                                    <div class="info-item">
-                                        <i class="fas fa-user-friends"></i>
-                                        <span>1 người</span>
-                                    </div>
-                                    <div class="info-item">
-                                        <i class="fas fa-clock"></i>
-                                        <span>2h00</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="ticket-footer">
-                                <div class="ticket-price">
-                                    <span class="price">2.150.000đ</span>
-                                    <span class="status pending">Chờ thanh toán</span>
-                                </div>
-                                <div class="ticket-actions">
-                                    <button class="btn btn-danger btn-sm cancel-hold-btn">
-                                        <i class="fas fa-times"></i> Hủy giữ
-                                    </button>
-                                    <button class="btn btn-primary btn-sm payment-btn">
-                                        <i class="fas fa-credit-card"></i> Thanh toán
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Tickets will be loaded from localStorage -->
                     </div>
                 </div>
                 
-                <!-- Past Tickets -->
+                <!-- Past Tickets Section -->
                 <div class="tickets-section">
                     <h3><i class="fas fa-history"></i> Chuyến đã đi</h3>
                     <div class="tickets-list" id="completedTickets">
-                        <!-- Completed tickets will be loaded here -->
-                        <div class="ticket-card">
-                            <div class="ticket-header">
-                                <div class="ticket-status">
-                                    <span class="status-badge completed">ĐÃ ĐI</span>
-                                    <span class="ticket-code">Mã vé: PT-321654</span>
-                                </div>
-                                <div class="ticket-date">
-                                    <span class="date">05/01/2024</span>
-                                    <span class="time">08:00</span>
-                                </div>
-                            </div>
-                            
-                            <div class="ticket-body">
-                                <div class="ticket-route">
-                                    <div class="from">
-                                        <div class="city">ĐÀ NẴNG</div>
-                                        <div class="station">Bến xe Đà Nẵng</div>
-                                    </div>
-                                    <div class="route-arrow">
-                                        <i class="fas fa-long-arrow-alt-right"></i>
-                                    </div>
-                                    <div class="to">
-                                        <div class="city">NHA TRANG</div>
-                                        <div class="station">Bến xe Nha Trang</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="ticket-info">
-                                    <div class="info-item">
-                                        <i class="fas fa-bus"></i>
-                                        <span>Phương Trang</span>
-                                    </div>
-                                    <div class="info-item">
-                                        <i class="fas fa-chair"></i>
-                                        <span>Ghế: 05</span>
-                                    </div>
-                                    <div class="info-item">
-                                        <i class="fas fa-user-friends"></i>
-                                        <span>1 người</span>
-                                    </div>
-                                    <div class="info-item">
-                                        <i class="fas fa-clock"></i>
-                                        <span>4h30</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="ticket-footer">
-                                <div class="ticket-price">
-                                    <span class="price">450.000đ</span>
-                                    <span class="status">Đã thanh toán</span>
-                                </div>
-                                <div class="ticket-actions">
-                                    <button class="btn btn-outline btn-sm view-qr-btn">
-                                        <i class="fas fa-qrcode"></i> QR Code
-                                    </button>
-                                    <button class="btn btn-outline btn-sm review-btn">
-                                        <i class="fas fa-star"></i> Đánh giá
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Tickets will be loaded from localStorage -->
                     </div>
                 </div>
                 
-                <!-- Empty State -->
-                <div class="empty-state" id="emptyState" style="display: none;">
-                    <div class="empty-icon">
-                        <i class="fas fa-ticket-alt"></i>
+                <!-- Cancelled Tickets Section -->
+                <div class="tickets-section">
+                    <h3><i class="fas fa-times-circle"></i> Vé đã hủy</h3>
+                    <div class="tickets-list" id="cancelledTickets">
+                        <!-- Tickets will be loaded from localStorage -->
                     </div>
-                    <h3>Chưa có vé nào</h3>
-                    <p>Bạn chưa đặt vé nào. Hãy bắt đầu tìm kiếm chuyến đi!</p>
-                    <a href="bus.html" class="btn btn-primary">
-                        <i class="fas fa-search"></i> Tìm chuyến đi
-                    </a>
                 </div>
+                
+                <!-- Empty State (shown when no tickets) -->
+                <div class="empty-state" id="emptyState">
+    <div class="empty-icon">
+        <i class="fas fa-ticket-alt"></i>
+    </div>
+    <h3>Chưa có vé nào</h3>
+    <p>Bạn chưa đặt vé nào. Hãy bắt đầu tìm kiếm chuyến đi!</p>
+    <div class="booking-options">
+        <a href="bus.html" class="btn btn-primary">
+            <i class="fas fa-bus"></i> Đặt vé xe
+        </a>
+        <a href="plane.html" class="btn btn-primary">
+            <i class="fas fa-plane"></i> Đặt vé máy bay
+        </a>
+        <a href="train.html" class="btn btn-primary">
+            <i class="fas fa-train"></i> Đặt vé tàu
+        </a>
+    </div>
+</div>
             </div>
         </div>
         
@@ -322,27 +740,27 @@
                 <div class="modal-body">
                     <div class="qr-container">
                         <div class="qr-code" id="qrCodeDisplay">
-                            <!-- QR code will be generated here -->
                             <div class="qr-placeholder">
                                 <i class="fas fa-qrcode"></i>
+                                <p style="font-size: 1rem; margin-top: 10px;">Mã QR hiển thị tại đây</p>
                             </div>
                         </div>
                         <div class="qr-info">
                             <div class="info-item">
                                 <span class="label">Mã vé:</span>
-                                <span class="value" id="qrTicketCode">ML-789012</span>
+                                <span class="value" id="qrTicketCode">--</span>
                             </div>
                             <div class="info-item">
                                 <span class="label">Tuyến đường:</span>
-                                <span class="value" id="qrTicketRoute">TP.HCM → HÀ NỘI</span>
+                                <span class="value" id="qrTicketRoute">--</span>
                             </div>
                             <div class="info-item">
                                 <span class="label">Thời gian:</span>
-                                <span class="value" id="qrTicketTime">31/12/2025 • 22:00</span>
+                                <span class="value" id="qrTicketTime">--</span>
                             </div>
                             <div class="info-item">
                                 <span class="label">Trạng thái:</span>
-                                <span class="value status-upcoming">Đã thanh toán</span>
+                                <span class="value status-upcoming">--</span>
                             </div>
                             <div class="qr-actions">
                                 <button class="btn btn-outline" id="printTicketBtn">
@@ -366,7 +784,9 @@
                     <button class="modal-close">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <!-- Details will be loaded by JavaScript -->
+                    <div class="ticket-details-container">
+                        <!-- Details will be loaded by JavaScript -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -384,15 +804,15 @@
                         <div class="summary-details">
                             <div class="detail-row">
                                 <span>Mã vé:</span>
-                                <span>VN-456123</span>
+                                <span id="paymentTicketCode">--</span>
                             </div>
                             <div class="detail-row">
                                 <span>Tổng tiền:</span>
-                                <span class="total-price">2.150.000đ</span>
+                                <span class="total-price" id="paymentTotalPrice">0đ</span>
                             </div>
                             <div class="detail-row">
                                 <span>Hạn thanh toán:</span>
-                                <span class="deadline">Còn 25 phút</span>
+                                <span class="deadline">--</span>
                             </div>
                         </div>
                     </div>
@@ -400,26 +820,26 @@
                     <div class="payment-methods">
                         <h4>Chọn phương thức thanh toán</h4>
                         <div class="methods-list">
-                            <div class="method-option active" data-method="qr">
+                            <div class="method-option active" data-method="account">
                                 <div class="method-icon">
-                                    <i class="fas fa-qrcode"></i>
+                                    <i class="fas fa-university"></i>
                                 </div>
                                 <div class="method-info">
-                                    <h5>QR Code</h5>
-                                    <p>Quét mã để thanh toán</p>
+                                    <h5>Tài khoản ngân hàng</h5>
+                                    <p>Thanh toán từ tài khoản của bạn</p>
                                 </div>
                                 <div class="method-check">
                                     <i class="fas fa-check"></i>
                                 </div>
                             </div>
                             
-                            <div class="method-option" data-method="bank">
+                            <div class="method-option" data-method="qr">
                                 <div class="method-icon">
-                                    <i class="fas fa-university"></i>
+                                    <i class="fas fa-qrcode"></i>
                                 </div>
                                 <div class="method-info">
-                                    <h5>Chuyển khoản ngân hàng</h5>
-                                    <p>Chuyển khoản qua Internet Banking</p>
+                                    <h5>QR Code</h5>
+                                    <p>Quét mã để thanh toán</p>
                                 </div>
                                 <div class="method-check">
                                     <i class="fas fa-check"></i>
@@ -433,19 +853,6 @@
                                 <div class="method-info">
                                     <h5>Thẻ tín dụng/ghi nợ</h5>
                                     <p>Visa, Mastercard, JCB</p>
-                                </div>
-                                <div class="method-check">
-                                    <i class="fas fa-check"></i>
-                                </div>
-                            </div>
-                            
-                            <div class="method-option" data-method="wallet">
-                                <div class="method-icon">
-                                    <i class="fas fa-wallet"></i>
-                                </div>
-                                <div class="method-info">
-                                    <h5>Ví điện tử</h5>
-                                    <p>Momo, ZaloPay, VNPay</p>
                                 </div>
                                 <div class="method-check">
                                     <i class="fas fa-check"></i>
@@ -469,23 +876,9 @@
                     
                     <div class="payment-details" id="paymentDetails">
                         <!-- Payment details will be shown based on selected method -->
-                        <div class="qr-payment active">
-                            <h5>Quét mã QR để thanh toán</h5>
-                            <div class="qr-display">
-                                <div class="payment-qr" id="paymentQrCode">
-                                    <!-- QR code for payment -->
-                                </div>
-                                <div class="qr-instructions">
-                                    <p><strong>Hướng dẫn:</strong></p>
-                                    <ol>
-                                        <li>Mở ứng dụng ngân hàng hoặc ví điện tử</li>
-                                        <li>Chọn tính năng quét mã QR</li>
-                                        <li>Quét mã bên cạnh để thanh toán</li>
-                                        <li>Kiểm tra và xác nhận thanh toán</li>
-                                    </ol>
-                                    <p class="note">Vé sẽ tự động cập nhật sau khi thanh toán thành công</p>
-                                </div>
-                            </div>
+                        <div class="account-payment active">
+                            <h5>Thanh toán từ tài khoản ngân hàng</h5>
+                            <p>Số tiền sẽ được trừ trực tiếp từ tài khoản ngân hàng đã liên kết.</p>
                         </div>
                     </div>
                     
@@ -500,6 +893,38 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Cancel Confirm Modal -->
+        <div class="modal" id="cancelConfirmModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Xác nhận hủy vé</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="cancel-confirm">
+                        <div class="cancel-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h4 class="cancel-message">Bạn có chắc chắn muốn hủy vé này?</h4>
+                        <p class="cancel-note" id="cancelNote">Vé đã thanh toán sẽ được hoàn tiền theo chính sách của TravelHub. Phí hủy vé có thể được áp dụng.</p>
+                        
+                        <div class="cancel-details" id="cancelDetails">
+                            <!-- Cancel details will be loaded here -->
+                        </div>
+                        
+                        <div class="cancel-actions">
+                            <button class="btn btn-outline" id="cancelNoBtn">
+                                <i class="fas fa-times"></i> Không hủy
+                            </button>
+                            <button class="btn btn-danger" id="cancelYesBtn">
+                                <i class="fas fa-check"></i> Đồng ý hủy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- Footer (giống index.html) -->
@@ -507,8 +932,661 @@
         <!-- Nội dung giống index.html -->
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js"></script>
-    <script src="script.js"></script>
-    <script src="tickets.js"></script>
+    <script>
+        // TravelHub Tickets System
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const filterTabs = document.querySelectorAll('.filter-tab');
+            const searchInput = document.getElementById('searchTickets');
+            const ticketLists = {
+                upcoming: document.getElementById('upcomingTickets'),
+                completed: document.getElementById('completedTickets'),
+                cancelled: document.getElementById('cancelledTickets')
+            };
+            const emptyState = document.getElementById('emptyState');
+            
+            // Modal Elements
+            const qrModal = document.getElementById('qrModal');
+            const ticketDetailsModal = document.getElementById('ticketDetailsModal');
+            const paymentModal = document.getElementById('paymentModal');
+            const cancelConfirmModal = document.getElementById('cancelConfirmModal');
+            const modalCloses = document.querySelectorAll('.modal-close');
+            
+            // LocalStorage key
+            const STORAGE_KEY = 'travelhub_tickets';
+            
+            // Initialize
+            loadTickets();
+            
+            // Load tickets from localStorage
+            function loadTickets() {
+                const tickets = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+                renderTickets(tickets);
+                updateTicketCounts(tickets);
+            }
+            
+            // Render tickets to the page
+            function renderTickets(tickets) {
+                // Clear all ticket lists
+                Object.values(ticketLists).forEach(list => list.innerHTML = '');
+                
+                if (tickets.length === 0) {
+                    emptyState.style.display = 'block';
+                    return;
+                }
+                
+                emptyState.style.display = 'none';
+                
+                // Sort tickets by date (newest first)
+                tickets.sort((a, b) => new Date(b.date + ' ' + b.time) - new Date(a.date + ' ' + a.time));
+                
+                // Render each ticket
+                tickets.forEach(ticket => {
+                    const ticketElement = createTicketElement(ticket);
+                    
+                    // Add to appropriate section based on status
+                    if (ticket.status === 'cancelled') {
+                        ticketLists.cancelled.appendChild(ticketElement);
+                    } else if (ticket.status === 'completed') {
+                        ticketLists.completed.appendChild(ticketElement);
+                    } else {
+                        ticketLists.upcoming.appendChild(ticketElement);
+                    }
+                });
+                
+                // Reattach event listeners to new ticket elements
+                attachTicketEventListeners();
+            }
+            
+            // Create ticket HTML element
+            function createTicketElement(ticket) {
+                const div = document.createElement('div');
+                div.className = `ticket-card ${ticket.status === 'hold' ? 'active' : ''}`;
+                div.setAttribute('data-id', ticket.id);
+                div.setAttribute('data-type', ticket.type);
+                
+                let typeText, typeClass;
+                switch(ticket.type) {
+                    case 'bus': typeText = 'XE KHÁCH'; typeClass = 'bus'; break;
+                    case 'plane': typeText = 'MÁY BAY'; typeClass = 'plane'; break;
+                    case 'train': typeText = 'TÀU HỎA'; typeClass = 'train'; break;
+                }
+                
+                let statusText, statusClass;
+                switch(ticket.status) {
+                    case 'upcoming': statusText = 'SẮP TỚI'; statusClass = 'upcoming'; break;
+                    case 'hold': statusText = 'ĐANG GIỮ'; statusClass = 'hold'; break;
+                    case 'completed': statusText = 'ĐÃ ĐI'; statusClass = 'completed'; break;
+                    case 'cancelled': statusText = 'ĐÃ HỦY'; statusClass = 'cancelled'; break;
+                }
+                
+                let actionButtons = '';
+                if (ticket.status === 'hold') {
+                    actionButtons = `
+                        <button class="btn btn-danger btn-sm cancel-hold-btn" data-id="${ticket.id}">
+                            <i class="fas fa-times"></i> Hủy giữ
+                        </button>
+                        <button class="btn btn-primary btn-sm payment-btn" data-id="${ticket.id}">
+                            <i class="fas fa-credit-card"></i> Thanh toán
+                        </button>
+                    `;
+                } else if (ticket.status === 'upcoming') {
+                    actionButtons = `
+                        <button class="btn btn-outline btn-sm view-qr-btn" data-id="${ticket.id}">
+                            <i class="fas fa-qrcode"></i> QR Code
+                        </button>
+                        <button class="btn btn-primary btn-sm details-btn" data-id="${ticket.id}">
+                            <i class="fas fa-info-circle"></i> Chi tiết
+                        </button>
+                        <button class="btn btn-danger btn-sm cancel-ticket-btn" data-id="${ticket.id}">
+                            <i class="fas fa-times"></i> Hủy vé
+                        </button>
+                    `;
+                } else if (ticket.status === 'completed') {
+                    actionButtons = `
+                        <button class="btn btn-outline btn-sm view-qr-btn" data-id="${ticket.id}">
+                            <i class="fas fa-qrcode"></i> QR Code
+                        </button>
+                        <button class="btn btn-outline btn-sm review-btn" data-id="${ticket.id}">
+                            <i class="fas fa-star"></i> Đánh giá
+                        </button>
+                    `;
+                } else if (ticket.status === 'cancelled') {
+                    actionButtons = `
+                        <button class="btn btn-outline btn-sm view-qr-btn" data-id="${ticket.id}" disabled>
+                            <i class="fas fa-qrcode"></i> QR Code
+                        </button>
+                        <button class="btn btn-outline btn-sm rebook-btn" data-id="${ticket.id}">
+                            <i class="fas fa-redo"></i> Đặt lại
+                        </button>
+                    `;
+                }
+                
+                div.innerHTML = `
+                    <div class="ticket-header">
+                        <div class="ticket-left">
+                            <span class="status-badge ${statusClass}">${statusText}</span>
+                            <span class="ticket-code">Mã vé: ${ticket.id}</span>
+                        </div>
+                        <div class="ticket-right">
+                            <div class="ticket-type ${typeClass}">${typeText}</div>
+                            <div class="ticket-date">
+                                <span class="date">${ticket.date}</span>
+                                <span class="time">${ticket.time}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ticket-body">
+                        <div class="ticket-route">
+                            <div class="from">
+                                <div class="city">${ticket.fromCity}</div>
+                                <div class="station">${ticket.fromStation}</div>
+                            </div>
+                            <div class="route-arrow">
+                                <i class="fas fa-long-arrow-alt-right"></i>
+                            </div>
+                            <div class="to">
+                                <div class="city">${ticket.toCity}</div>
+                                <div class="station">${ticket.toStation}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="ticket-info">
+                            <div class="info-item">
+                                <i class="fas fa-${ticket.type === 'bus' ? 'bus' : ticket.type === 'plane' ? 'plane' : 'train'}"></i>
+                                <span>${ticket.carrier}</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-chair"></i>
+                                <span>${ticket.seats}</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-user-friends"></i>
+                                <span>${ticket.passengers} người</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-clock"></i>
+                                <span>${ticket.duration}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ticket-footer">
+                        <div class="ticket-price">
+                            <span class="price">${ticket.price}</span>
+                            <span class="status ${ticket.paymentStatus === 'pending' ? 'pending' : ticket.status === 'cancelled' ? 'cancelled' : ''}">
+                                ${ticket.paymentStatus === 'pending' ? 'Chờ thanh toán' : ticket.status === 'cancelled' ? 'Đã hoàn tiền' : 'Đã thanh toán'}
+                            </span>
+                        </div>
+                        <div class="ticket-actions">
+                            ${actionButtons}
+                        </div>
+                    </div>
+                `;
+                
+                return div;
+            }
+            
+            // Attach event listeners to ticket buttons
+            function attachTicketEventListeners() {
+                // View QR Code
+                document.querySelectorAll('.view-qr-btn:not([disabled])').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const ticketId = this.getAttribute('data-id');
+                        showQRModal(ticketId);
+                    });
+                });
+                
+                // View Details
+                document.querySelectorAll('.details-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const ticketId = this.getAttribute('data-id');
+                        showDetailsModal(ticketId);
+                    });
+                });
+                
+                // Cancel Hold
+                document.querySelectorAll('.cancel-hold-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const ticketId = this.getAttribute('data-id');
+                        showCancelConfirmModal(ticketId, 'hold');
+                    });
+                });
+                
+                // Cancel Ticket
+                document.querySelectorAll('.cancel-ticket-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const ticketId = this.getAttribute('data-id');
+                        showCancelConfirmModal(ticketId, 'ticket');
+                    });
+                });
+                
+                // Payment
+                document.querySelectorAll('.payment-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const ticketId = this.getAttribute('data-id');
+                        showPaymentModal(ticketId);
+                    });
+                });
+                
+                // Review
+                document.querySelectorAll('.review-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const ticketId = this.getAttribute('data-id');
+                        alert(`Bạn đang đánh giá vé ${ticketId}. Chức năng đánh giá đang được phát triển.`);
+                    });
+                });
+                
+                // Rebook
+                document.querySelectorAll('.rebook-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const ticketId = this.getAttribute('data-id');
+                        const tickets = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+                        const ticket = tickets.find(t => t.id === ticketId);
+                        
+                        if (ticket) {
+                            let redirectUrl;
+                            switch(ticket.type) {
+                                case 'bus': redirectUrl = 'bus.html'; break;
+                                case 'plane': redirectUrl = 'plane.html'; break;
+                                case 'train': redirectUrl = 'train.html'; break;
+                            }
+                            window.location.href = redirectUrl;
+                        }
+                    });
+                });
+            }
+            
+            // Show QR Modal
+            function showQRModal(ticketId) {
+                const tickets = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+                const ticket = tickets.find(t => t.id === ticketId);
+                
+                if (ticket) {
+                    document.getElementById('qrTicketCode').textContent = ticketId;
+                    document.getElementById('qrTicketRoute').textContent = `${ticket.fromCity} → ${ticket.toCity}`;
+                    document.getElementById('qrTicketTime').textContent = `${ticket.date} • ${ticket.time}`;
+                    qrModal.style.display = 'flex';
+                }
+            }
+            
+            // Show Details Modal
+            function showDetailsModal(ticketId) {
+                const tickets = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+                const ticket = tickets.find(t => t.id === ticketId);
+                
+                if (ticket) {
+                    const detailsContainer = ticketDetailsModal.querySelector('.ticket-details-container');
+                    
+                    let typeIcon, typeText;
+                    switch(ticket.type) {
+                        case 'bus': typeIcon = 'fas fa-bus'; typeText = 'Xe khách'; break;
+                        case 'plane': typeIcon = 'fas fa-plane'; typeText = 'Máy bay'; break;
+                        case 'train': typeIcon = 'fas fa-train'; typeText = 'Tàu hỏa'; break;
+                    }
+                    
+                    detailsContainer.innerHTML = `
+                        <div class="detail-section">
+                            <h4><i class="${typeIcon}"></i> Thông tin chuyến đi</h4>
+                            <div class="detail-row">
+                                <span>Mã vé:</span>
+                                <span>${ticketId}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>Loại vé:</span>
+                                <span>${typeText}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>Tuyến đường:</span>
+                                <span>${ticket.fromCity} → ${ticket.toCity}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>Điểm đón/trả:</span>
+                                <span>${ticket.fromStation} → ${ticket.toStation}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>Thời gian:</span>
+                                <span>${ticket.date} • ${ticket.time}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>Nhà xe/Hãng:</span>
+                                <span>${ticket.carrier}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>Thời gian di chuyển:</span>
+                                <span>${ticket.duration}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <h4><i class="fas fa-users"></i> Thông tin hành khách</h4>
+                            <div class="passenger-list">
+                                ${ticket.passengerNames ? ticket.passengerNames.map((name, index) => `
+                                    <div class="passenger-item">
+                                        <div>
+                                            <strong>${name}</strong>
+                                            <div>Ghế: ${ticket.seats.split(', ')[index] || ticket.seats}</div>
+                                        </div>
+                                    </div>
+                                `).join('') : `
+                                    <div class="passenger-item">
+                                        <div>
+                                            <strong>Nguyễn Văn A</strong>
+                                            <div>Ghế: ${ticket.seats}</div>
+                                        </div>
+                                    </div>
+                                `}
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <h4><i class="fas fa-receipt"></i> Thông tin thanh toán</h4>
+                            <div class="detail-row">
+                                <span>Số lượng:</span>
+                                <span>${ticket.passengers} người</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>Tổng tiền:</span>
+                                <span>${ticket.price}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>Trạng thái:</span>
+                                <span>${ticket.status === 'upcoming' ? 'Sắp tới' : 
+                                         ticket.status === 'hold' ? 'Đang giữ' :
+                                         ticket.status === 'completed' ? 'Đã đi' : 'Đã hủy'}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>Thanh toán:</span>
+                                <span>${ticket.paymentStatus === 'pending' ? 'Chờ thanh toán' : 'Đã thanh toán'}</span>
+                            </div>
+                        </div>
+                    `;
+                    
+                    ticketDetailsModal.style.display = 'flex';
+                }
+            }
+            
+            // Show Payment Modal
+            function showPaymentModal(ticketId) {
+                const tickets = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+                const ticket = tickets.find(t => t.id === ticketId);
+                
+                if (ticket) {
+                    document.getElementById('paymentTicketCode').textContent = ticketId;
+                    document.getElementById('paymentTotalPrice').textContent = ticket.price;
+                    paymentModal.style.display = 'flex';
+                }
+            }
+            
+            // Show Cancel Confirm Modal
+            function showCancelConfirmModal(ticketId, cancelType) {
+                const tickets = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+                const ticket = tickets.find(t => t.id === ticketId);
+                
+                if (ticket) {
+                    let note = '';
+                    if (cancelType === 'hold') {
+                        note = 'Vé đang trong trạng thái giữ chỗ. Hủy giữ sẽ giải phóng chỗ ngồi và xóa vé khỏi danh sách.';
+                    } else {
+                        const priceNum = parseInt(ticket.price.replace(/\./g, '').replace('đ', ''));
+                        const refundAmount = ticket.paymentStatus === 'paid' ? (priceNum * 0.9).toLocaleString('vi-VN') + 'đ' : '0đ';
+                        note = `Vé sẽ được hủy. ${ticket.paymentStatus === 'paid' ? `Số tiền hoàn: ${refundAmount}` : 'Không có tiền hoàn lại vì chưa thanh toán.'}`;
+                    }
+                    
+                    document.getElementById('cancelNote').textContent = note;
+                    
+                    const cancelDetails = document.getElementById('cancelDetails');
+                    cancelDetails.innerHTML = `
+                        <div class="detail-section">
+                            <div class="detail-row">
+                                <span>Mã vé:</span>
+                                <span>${ticketId}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>Tuyến:</span>
+                                <span>${ticket.fromCity} → ${ticket.toCity}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>Thời gian:</span>
+                                <span>${ticket.date} • ${ticket.time}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>Số tiền:</span>
+                                <span>${ticket.price}</span>
+                            </div>
+                        </div>
+                    `;
+                    
+                    document.getElementById('cancelYesBtn').setAttribute('data-id', ticketId);
+                    document.getElementById('cancelYesBtn').setAttribute('data-type', cancelType);
+                    cancelConfirmModal.style.display = 'flex';
+                }
+            }
+            
+            // Update ticket counts
+            function updateTicketCounts(tickets) {
+                const allCount = tickets.length;
+                const upcomingCount = tickets.filter(t => t.status === 'upcoming' || t.status === 'hold').length;
+                const completedCount = tickets.filter(t => t.status === 'completed').length;
+                const cancelledCount = tickets.filter(t => t.status === 'cancelled').length;
+                
+                // Update tab counts
+                document.querySelector('.filter-tab[data-filter="all"] .tab-count').textContent = allCount;
+                document.querySelector('.filter-tab[data-filter="upcoming"] .tab-count').textContent = upcomingCount;
+                document.querySelector('.filter-tab[data-filter="completed"] .tab-count').textContent = completedCount;
+                document.querySelector('.filter-tab[data-filter="cancelled"] .tab-count').textContent = cancelledCount;
+            }
+            
+            // Filter Tickets
+            filterTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Update active tab
+                    filterTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show all tickets first
+                    const allTickets = document.querySelectorAll('.ticket-card');
+                    allTickets.forEach(ticket => {
+                        ticket.style.display = 'flex';
+                    });
+                    
+                    if (filter !== 'all') {
+                        // Hide tickets that don't match the filter
+                        allTickets.forEach(ticket => {
+                            const statusBadge = ticket.querySelector('.status-badge');
+                            const statusClass = statusBadge.className.split(' ')[1];
+                            
+                            if (filter === 'upcoming') {
+                                if (statusClass !== 'upcoming' && statusClass !== 'hold') {
+                                    ticket.style.display = 'none';
+                                }
+                            } else if (filter !== statusClass) {
+                                ticket.style.display = 'none';
+                            }
+                        });
+                    }
+                });
+            });
+            
+            // Search Tickets
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const tickets = document.querySelectorAll('.ticket-card');
+                
+                tickets.forEach(ticket => {
+                    const ticketCode = ticket.querySelector('.ticket-code').textContent.toLowerCase();
+                    const fromCity = ticket.querySelector('.from .city').textContent.toLowerCase();
+                    const toCity = ticket.querySelector('.to .city').textContent.toLowerCase();
+                    const carrier = ticket.querySelectorAll('.info-item')[0].textContent.toLowerCase();
+                    
+                    if (ticketCode.includes(searchTerm) || 
+                        fromCity.includes(searchTerm) || 
+                        toCity.includes(searchTerm) ||
+                        carrier.includes(searchTerm)) {
+                        ticket.style.display = 'flex';
+                    } else {
+                        ticket.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Payment Method Selection
+            const methodOptions = document.querySelectorAll('.method-option');
+            methodOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    methodOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Confirm Payment
+            document.getElementById('confirmPaymentBtn').addEventListener('click', function() {
+                const ticketCode = document.getElementById('paymentTicketCode').textContent;
+                const tickets = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+                const ticketIndex = tickets.findIndex(t => t.id === ticketCode);
+                
+                if (ticketIndex !== -1) {
+                    // Update ticket status
+                    tickets[ticketIndex].status = 'upcoming';
+                    tickets[ticketIndex].paymentStatus = 'paid';
+                    
+                    // Save to localStorage
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(tickets));
+                    
+                    // Reload tickets
+                    loadTickets();
+                    
+                    // Show success message
+                    alert('Thanh toán thành công! Vé của bạn đã được xác nhận.');
+                    paymentModal.style.display = 'none';
+                }
+            });
+            
+            // Cancel Payment
+            document.getElementById('cancelPaymentBtn').addEventListener('click', function() {
+                paymentModal.style.display = 'none';
+            });
+            
+            // Confirm Cancellation
+            document.getElementById('cancelYesBtn').addEventListener('click', function() {
+                const ticketId = this.getAttribute('data-id');
+                const cancelType = this.getAttribute('data-type');
+                const tickets = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+                const ticketIndex = tickets.findIndex(t => t.id === ticketId);
+                
+                if (ticketIndex !== -1) {
+                    if (cancelType === 'hold') {
+                        // Remove hold ticket
+                        tickets.splice(ticketIndex, 1);
+                    } else {
+                        // Mark ticket as cancelled
+                        tickets[ticketIndex].status = 'cancelled';
+                        tickets[ticketIndex].paymentStatus = 'refunded';
+                    }
+                    
+                    // Save to localStorage
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(tickets));
+                    
+                    // Reload tickets
+                    loadTickets();
+                    
+                    // Show confirmation
+                    alert(cancelType === 'hold' ? 'Đã hủy giữ vé thành công!' : 'Đã hủy vé thành công!');
+                    cancelConfirmModal.style.display = 'none';
+                }
+            });
+            
+            // Don't Cancel
+            document.getElementById('cancelNoBtn').addEventListener('click', function() {
+                cancelConfirmModal.style.display = 'none';
+            });
+            
+            // Close Modals
+            modalCloses.forEach(close => {
+                close.addEventListener('click', function() {
+                    this.closest('.modal').style.display = 'none';
+                });
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target.classList.contains('modal')) {
+                    event.target.style.display = 'none';
+                }
+            });
+            
+            // Print Ticket
+            document.getElementById('printTicketBtn').addEventListener('click', function() {
+                window.print();
+            });
+            
+            // Download Ticket
+            document.getElementById('downloadTicketBtn').addEventListener('click', function() {
+                alert('Chức năng tải vé đang được phát triển. Vui lòng sử dụng mã QR hoặc in vé.');
+            });
+            
+            // Add sample data button (for testing only)
+            const addSampleBtn = document.createElement('button');
+            addSampleBtn.className = 'btn btn-outline btn-sm';
+            addSampleBtn.innerHTML = '<i class="fas fa-plus"></i> Thêm vé mẫu';
+            addSampleBtn.style.position = 'fixed';
+            addSampleBtn.style.bottom = '20px';
+            addSampleBtn.style.right = '20px';
+            addSampleBtn.style.zIndex = '100';
+            addSampleBtn.addEventListener('click', addSampleTickets);
+            document.body.appendChild(addSampleBtn);
+            
+            // Function to add sample tickets (for testing)
+            function addSampleTickets() {
+                const sampleTickets = [
+                    {
+                        id: 'SE-789456',
+                        type: 'train',
+                        status: 'upcoming',
+                        date: '15/12/2025',
+                        time: '19:30',
+                        fromCity: 'HÀ NỘI',
+                        fromStation: 'Ga Hà Nội',
+                        toCity: 'ĐÀ NẴNG',
+                        toStation: 'Ga Đà Nẵng',
+                        carrier: 'SE1 Thống Nhất',
+                        seats: '3A, 3B',
+                        passengers: 2,
+                        duration: '16h00',
+                        price: '1.450.000đ',
+                        paymentStatus: 'paid',
+                        passengerNames: ['Nguyễn Văn A', 'Trần Thị B']
+                    },
+                    {
+                        id: 'VN-456123',
+                        type: 'plane',
+                        status: 'hold',
+                        date: '20/12/2025',
+                        time: '14:30',
+                        fromCity: 'TP.HCM',
+                        fromStation: 'Sân bay TSN',
+                        toCity: 'HÀ NỘI',
+                        toStation: 'Sân bay Nội Bài',
+                        carrier: 'Vietnam Airlines',
+                        seats: '15A',
+                        passengers: 1,
+                        duration: '2h00',
+                        price: '2.150.000đ',
+                        paymentStatus: 'pending',
+                        passengerNames: ['Nguyễn Văn A']
+                    }
+                ];
+                
+                const existingTickets = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+                const updatedTickets = [...existingTickets, ...sampleTickets];
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedTickets));
+                loadTickets();
+                alert('Đã thêm 2 vé mẫu để thử nghiệm!');
+            }
+        });
+    </script>
 </body>
 </html>

@@ -444,4 +444,285 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     };
 });
+    // ============ THÊM CODE MỚI CHO BUS BOOKING ============
+    
+    // Kiểm tra xem có đang ở trang đặt vé xe bus không
+    if (document.querySelector('.bus-booking-page')) {
+        console.log('Bus booking page loaded');
+        
+        // Khởi tạo biến
+        let selectedSeats = [];
+        const seatPrice = 150000; // Giá mỗi ghế
+        
+        // Lấy các phần tử DOM
+        const seatElements = document.querySelectorAll('.seat:not(.unavailable)');
+        const floorTabs = document.querySelectorAll('.floor-tab');
+        const busFloors = document.querySelectorAll('.bus-floor');
+        const selectedSeatsInfo = document.querySelector('.selected-seats-info strong');
+        const busTotalPrice = document.getElementById('busTotalPrice');
+        const busContinueBtn = document.getElementById('busContinueBtn');
+        
+        // Chuyển đổi giữa các tầng xe
+        if (floorTabs.length > 0) {
+            floorTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const floor = this.getAttribute('data-floor');
+                    
+                    // Xóa active khỏi tất cả tabs
+                    floorTabs.forEach(t => t.classList.remove('active'));
+                    // Thêm active cho tab được click
+                    this.classList.add('active');
+                    
+                    // Ẩn tất cả các tầng
+                    busFloors.forEach(f => f.classList.remove('active'));
+                    // Hiển thị tầng được chọn
+                    document.getElementById(`floor-${floor}`).classList.add('active');
+                });
+            });
+        }
+        
+        // Xử lý chọn ghế
+        seatElements.forEach(seat => {
+            seat.addEventListener('click', function() {
+                if (this.classList.contains('unavailable')) return;
+                
+                const seatNumber = this.getAttribute('data-seat');
+                const seatType = this.getAttribute('data-type');
+                
+                if (this.classList.contains('selected')) {
+                    // Bỏ chọn ghế
+                    this.classList.remove('selected');
+                    selectedSeats = selectedSeats.filter(s => s.number !== seatNumber);
+                } else {
+                    // Chọn ghế
+                    this.classList.add('selected');
+                    selectedSeats.push({
+                        number: seatNumber,
+                        type: seatType || 'regular'
+                    });
+                }
+                
+                updateSelectedSeats();
+                updateBookingSummary();
+            });
+        });
+        
+        // Cập nhật thông tin ghế đã chọn
+        function updateSelectedSeats() {
+            const seatsText = selectedSeats.map(s => s.number).join(', ');
+            if (selectedSeatsInfo) {
+                selectedSeatsInfo.textContent = seatsText || 'Chưa chọn ghế';
+            }
+            
+            // Bật/tắt nút tiếp tục
+            if (busContinueBtn) {
+                if (selectedSeats.length > 0) {
+                    busContinueBtn.disabled = false;
+                    busContinueBtn.classList.remove('disabled');
+                } else {
+                    busContinueBtn.disabled = true;
+                    busContinueBtn.classList.add('disabled');
+                }
+            }
+        }
+        
+        // Cập nhật tổng tiền
+        function updateBookingSummary() {
+            let totalPrice = 0;
+            
+            selectedSeats.forEach(seat => {
+                let price = seatPrice;
+                if (seat.type === 'vip') {
+                    price *= 1.5; // Ghế VIP đắt hơn 50%
+                }
+                totalPrice += price;
+            });
+            
+            if (busTotalPrice) {
+                busTotalPrice.textContent = formatCurrency(totalPrice);
+            }
+        }
+        
+        // Định dạng tiền tệ
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(amount);
+        }
+        
+        // Xử lý nút tiếp tục
+        if (busContinueBtn) {
+            busContinueBtn.addEventListener('click', function() {
+                if (selectedSeats.length === 0) {
+                    alert('Vui lòng chọn ít nhất một ghế trước khi tiếp tục.');
+                    return;
+                }
+                
+                // Hiển thị modal thanh toán
+                const paymentModal = document.getElementById('paymentModal');
+                if (paymentModal) {
+                    paymentModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        }
+        
+        // Xử lý các phương thức thanh toán
+        const paymentMethods = document.querySelectorAll('.payment-method');
+        paymentMethods.forEach(method => {
+            method.addEventListener('click', function() {
+                const methodType = this.getAttribute('data-method');
+                
+                // Đóng modal thanh toán
+                const paymentModal = document.getElementById('paymentModal');
+                if (paymentModal) {
+                    paymentModal.classList.remove('active');
+                }
+                
+                if (methodType === 'qr') {
+                    // Hiển thị modal QR
+                    const qrModal = document.getElementById('qrModal');
+                    if (qrModal) {
+                        qrModal.classList.add('active');
+                        startPaymentTimer();
+                    }
+                } else {
+                    // Xử lý các phương thức thanh toán khác
+                    processPayment(methodType);
+                }
+            });
+        });
+        
+        // Xử lý thanh toán (mô phỏng)
+        function processPayment(method) {
+            alert(`Đang xử lý thanh toán qua ${method}...`);
+            // Giả lập gọi API
+            setTimeout(() => {
+                alert('Thanh toán thành công! Vé của bạn đã được đặt.');
+                saveBookingToLocalStorage();
+                window.location.href = 'my-tickets.html';
+            }, 1000);
+        }
+        
+        // Xác nhận thanh toán QR
+        const confirmPaymentBtn = document.getElementById('confirmPaymentBtn');
+        if (confirmPaymentBtn) {
+            confirmPaymentBtn.addEventListener('click', function() {
+                alert('Thanh toán thành công! Vé của bạn đã được đặt.');
+                saveBookingToLocalStorage();
+                
+                const qrModal = document.getElementById('qrModal');
+                if (qrModal) {
+                    qrModal.classList.remove('active');
+                }
+                document.body.style.overflow = '';
+                
+                // Chuyển hướng sang trang vé
+                setTimeout(() => {
+                    window.location.href = 'my-tickets.html';
+                }, 1000);
+            });
+        }
+        
+        // Đóng modal
+        const closeButtons = document.querySelectorAll('.modal-close');
+        closeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const modal = this.closest('.modal-overlay');
+                if (modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+        
+        // Đóng modal khi click bên ngoài
+        const modals = document.querySelectorAll('.modal-overlay');
+        modals.forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+        
+        // Bộ đếm thời gian thanh toán QR
+        function startPaymentTimer() {
+            const timeoutElement = document.querySelector('.timeout');
+            if (!timeoutElement) return;
+            
+            let timeLeft = 300; // 5 phút
+            
+            const timer = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    timeoutElement.textContent = 'Đã hết thời gian thanh toán';
+                    
+                    // Tự động đóng modal QR sau khi hết giờ
+                    setTimeout(() => {
+                        const qrModal = document.getElementById('qrModal');
+                        if (qrModal) {
+                            qrModal.classList.remove('active');
+                        }
+                    }, 2000);
+                } else {
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    timeoutElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                    timeLeft--;
+                }
+            }, 1000);
+        }
+        
+        // Lưu vé vào localStorage
+        function saveBookingToLocalStorage() {
+            const booking = {
+                type: 'bus',
+                date: new Date().toISOString(),
+                seats: selectedSeats,
+                totalPrice: calculateTotalPrice(),
+                status: 'confirmed'
+            };
+            
+            // Lấy danh sách vé cũ hoặc tạo mới
+            const bookings = JSON.parse(localStorage.getItem('travelhubBookings')) || [];
+            booking.id = Date.now().toString(); // Tạo ID duy nhất
+            booking.createdAt = new Date().toISOString();
+            bookings.push(booking);
+            
+            // Lưu vào localStorage
+            localStorage.setItem('travelhubBookings', JSON.stringify(bookings));
+        }
+        
+        // Tính tổng tiền
+        function calculateTotalPrice() {
+            let total = 0;
+            selectedSeats.forEach(seat => {
+                let price = seatPrice;
+                if (seat.type === 'vip') {
+                    price *= 1.5;
+                }
+                total += price;
+            });
+            return total;
+        }
+        
+        // Khởi tạo
+        updateSelectedSeats();
+        updateBookingSummary();
+    }
+    
+    // ============ THÊM CODE CHO PLANE BOOKING ============
+    if (document.querySelector('.plane-booking-page')) {
+        console.log('Plane booking page loaded');
+        // Thêm code tương tự cho máy bay ở đây
+    }
+    
+    // ============ THÊM CODE CHO TRAIN BOOKING ============
+    if (document.querySelector('.train-booking-page')) {
+        console.log('Train booking page loaded');
+        // Thêm code tương tự cho tàu hỏa ở đây
+    }
 });
